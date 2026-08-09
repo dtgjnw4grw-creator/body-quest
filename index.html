@@ -1,558 +1,253 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#7C5CFC" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="BODY QUEST" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf6ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BODY QUEST">
+<title>BODY QUEST</title>
 <style>
-
 :root{
-  --bg:#F7F7FB; --card:#FFFFFF; --text:#242235; --muted:#7E7B91;
-  --primary:#7C5CFC; --primary2:#9A84FF; --green:#42C98B; --yellow:#FFC857;
-  --pink:#FF7E9D; --line:#ECEAF3; --shadow:0 12px 30px rgba(48,39,88,.08);
-  --radius:22px;
+  --bg:#fbf6ec; --card:#fffdf8; --ink:#26221e; --muted:#8d857b;
+  --green:#5da447; --green-dark:#498837; --green-soft:#edf6e7;
+  --line:#eadfce; --yellow:#ffc743; --purple:#302b43; --red:#f06750;
+  --shadow:0 10px 28px rgba(83,65,43,.08);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif}
-body{min-height:100vh}
-button,input,select{font:inherit}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif}
+button,input{font:inherit}
 button{cursor:pointer}
-#app{max-width:720px;margin:0 auto;min-height:100vh;padding-bottom:102px}
-.topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:18px 18px 12px;background:rgba(247,247,251,.92);backdrop-filter:blur(16px)}
-.topbar h1{font-size:22px;margin:1px 0;letter-spacing:-.5px}.eyebrow,.label{font-size:11px;font-weight:900;letter-spacing:1.2px;color:var(--primary)}
-.icon-btn{border:0;background:white;width:44px;height:44px;border-radius:15px;box-shadow:var(--shadow)}
-main{padding:4px 16px 20px}.screen{display:none;animation:fade .2s ease}.screen.active{display:block}
-@keyframes fade{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:none}}
-.hero-card{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 110px;gap:12px;background:linear-gradient(135deg,#7460F6,#A67CFF);color:white;border-radius:28px;padding:23px 20px;box-shadow:0 16px 36px rgba(124,92,252,.24);margin-bottom:14px}
-.hero-card:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.09);right:-50px;top:-50px}
-.level-pill{display:inline-block;background:rgba(255,255,255,.18);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
-.hero-card h2{font-size:24px;margin:14px 0 5px}.hero-card p{font-size:13px;opacity:.88;margin:0 0 17px;line-height:1.55}
-.avatar-wrap{display:flex;align-items:center;justify-content:center;position:relative}.avatar{font-size:67px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12));animation:float 3s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-7px)}}.level-burst{display:none;position:absolute;background:#FFF4B8;color:#5C4811;font-weight:900;padding:8px 10px;border-radius:12px;transform:rotate(-5deg);font-size:11px}
-.level-burst.show{display:block;animation:pop .9s ease forwards}@keyframes pop{0%{transform:scale(.3) rotate(-5deg);opacity:0}50%{transform:scale(1.15) rotate(4deg);opacity:1}100%{transform:scale(1);opacity:0}}
-.xp-track,.progress-track{height:11px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.2)}.xp-fill{height:100%;background:#FFF37A;border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}
-.xp-row{display:flex;justify-content:space-between;font-size:11px;margin-top:6px;opacity:.95}.grid{display:grid;gap:10px}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}
-.metric-card,.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-.metric-card{padding:16px;text-align:left;border:1px solid var(--line)}button.metric-card{width:100%;color:inherit}.metric-card span{display:block;color:var(--muted);font-size:12px}.metric-card strong{display:block;font-size:20px;margin:5px 0}.metric-card small{font-size:11px;color:var(--primary);font-weight:700}
-.card{padding:18px;margin-top:12px}.card-head,.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px}.card-head h3{margin:3px 0;font-size:17px}.section-title{padding:9px 2px 2px}.section-title h2{font-size:24px;margin:2px 0 6px}.progress-card .progress-track{background:#EEEAFB;height:13px;margin-top:12px}.progress-fill{height:100%;background:linear-gradient(90deg,#7C5CFC,#52D0A2);border-radius:99px;transition:width .5s ease}
-.muted{color:var(--muted);font-size:12px;line-height:1.55}.mini-metrics{margin-top:10px}.mini-metrics .metric-card{padding:13px}.mini-metrics .metric-card strong{font-size:17px}
-.quest-list{display:grid;gap:9px;margin-top:10px}.quest-item{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:10px;border:1px solid var(--line);border-radius:17px;padding:10px;background:#fff;transition:.2s}
-.quest-item.done{background:#F1FBF6;border-color:#C7F0DC}.quest-check{width:39px;height:39px;border-radius:13px;border:2px solid #D9D6E6;background:white;font-size:18px;font-weight:900}.done .quest-check{background:var(--green);border-color:var(--green);color:white}
-.quest-copy strong{display:block;font-size:14px}.quest-copy small{color:var(--muted);font-size:11px}.xp-badge,.soft-chip,.streak-chip,.xp-wallet{border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;background:#F0EDFF;color:var(--primary)}.xp-badge{white-space:nowrap}
-.text-btn{border:0;background:transparent;color:var(--primary);font-weight:800;font-size:12px}.primary-btn,.secondary-btn{border:0;border-radius:16px;padding:14px 16px;font-weight:900;width:100%}.primary-btn{background:var(--primary);color:white;box-shadow:0 8px 18px rgba(124,92,252,.18)}.secondary-btn{background:#ECEAF4;color:#59556E;margin-top:12px}
-.boss-card{background:linear-gradient(135deg,#2D2941,#41385E);color:white;border-radius:24px;padding:18px;margin-top:12px;box-shadow:var(--shadow)}.boss-title{display:flex;justify-content:space-between;align-items:flex-start}.boss-title h3{margin:2px 0}.boss-icon{font-size:42px}.boss-hp{height:12px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden;margin:13px 0 7px}.boss-hp-fill{height:100%;background:#FF7E9D;transition:width .4s}.boss-card button{margin-top:10px;background:#FFF;color:#332C49}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.stat-card{background:white;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}.stat-icon{font-size:28px}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-card h3{margin:8px 0 3px;font-size:15px}.stat-card strong{font-size:21px}.stat-bar{height:8px;background:#EEEAFB;border-radius:99px;overflow:hidden;margin-top:9px}.stat-fill{height:100%;background:var(--primary);border-radius:99px}
-canvas{width:100%;height:auto;display:block;margin-top:12px;border-radius:14px;background:#FCFBFF}
-.log-list{display:grid;gap:9px;margin-top:10px}.log-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.log-item:last-child{border-bottom:0}.log-item strong{font-size:13px}.log-item small{display:block;color:var(--muted);margin-top:3px}
-.reward-list{display:grid;gap:10px;margin:10px 0 14px}.reward-item{background:white;border:1px solid var(--line);border-radius:20px;padding:15px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;box-shadow:var(--shadow)}.reward-emoji{font-size:29px}.reward-copy strong{display:block}.reward-copy small{color:var(--muted)}.reward-actions{display:flex;flex-direction:column;gap:6px}.mini-btn{border:0;border-radius:11px;padding:7px 9px;font-size:10px;font-weight:900}.redeem-btn{background:#F0EDFF;color:var(--primary)}.edit-btn{background:#F4F3F7;color:#777386}
-.bottom-nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:30}
-.nav-item{border:0;background:transparent;color:#9995A8;padding:5px 2px}.nav-item span{display:block;font-size:21px;filter:grayscale(1);opacity:.65}.nav-item small{display:block;font-size:9px;font-weight:900;margin-top:2px}.nav-item.active{color:var(--primary)}.nav-item.active span{filter:none;opacity:1;transform:translateY(-1px)}
-.modal{width:min(92%,430px);border:0;border-radius:24px;padding:0;box-shadow:0 30px 80px rgba(25,20,50,.25)}.modal::backdrop{background:rgba(30,25,50,.42);backdrop-filter:blur(3px)}.modal form{padding:22px}.modal h3{margin:0 0 5px}.modal label{display:block;font-size:12px;font-weight:800;margin-top:14px}.modal input,.modal select{width:100%;margin-top:7px;padding:13px;border:1px solid #DCD9E8;border-radius:13px;background:white;color:var(--text)}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.modal-actions button{margin:0}
-.toast{position:fixed;z-index:100;left:50%;bottom:105px;transform:translate(-50%,20px);background:#292437;color:white;padding:11px 16px;border-radius:999px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
-.confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}.confetti{position:absolute;top:-20px;font-size:18px;animation:fall 1.3s linear forwards}@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
-@media(max-width:420px){.hero-card{grid-template-columns:1fr 88px}.avatar{font-size:54px}.hero-card h2{font-size:21px}.grid.three{gap:7px}.mini-metrics .metric-card{padding:11px 9px}.mini-metrics .metric-card strong{font-size:15px}.stats-grid{gap:8px}}
-
+.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:96px}
+.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(251,246,236,.95);backdrop-filter:blur(14px);border-bottom:1px solid rgba(234,223,206,.7)}
+.brand{font-weight:1000;font-size:22px}.gear{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#fffaf1}
+main{padding:14px}.screen{display:none}.screen.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
+.hero{display:grid;grid-template-columns:1fr 145px;gap:12px;align-items:center}
+h2,h3,p{margin-top:0}.hero h2{font-size:24px;margin-bottom:7px}
+.badge{display:inline-flex;align-items:center;gap:4px;background:#eff6e9;color:#4d8738;padding:6px 9px;border-radius:999px;font-size:11px;font-weight:900}
+.muted{font-size:12px;line-height:1.55;color:var(--muted)}
+.bar{height:12px;border-radius:999px;background:#efe7da;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#5da447,#83bd67);border-radius:999px;transition:.35s}
+.minirow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.mini{background:#fffaf3;border:1px solid var(--line);border-radius:15px;padding:10px;text-align:center;font-size:11px}.mini b{display:block;font-size:16px;margin-top:3px}
+.hamster{width:140px;height:140px;display:block;margin:auto;filter:drop-shadow(0 8px 5px rgba(80,58,35,.12))}
+.hamster.small{width:92px;height:92px}
+.daycard{background:linear-gradient(135deg,#edf7e5,#fff8df);position:relative;overflow:hidden}.daycard:after{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.45);right:-50px;top:-50px}.daytitle{font-weight:1000;font-size:23px;margin:8px 0}
+.btn{width:100%;border:0;border-radius:15px;padding:14px 16px;font-weight:900}.green{background:linear-gradient(#67ae50,#53983d);color:#fff}.ghost{background:#f0e9de;color:#5e554b}.gold{background:linear-gradient(#ffd45d,#f5b92f);color:#392a0e}
+.sectiontitle{font-size:24px;font-weight:1000;margin:4px 0 12px}
+.quest{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:17px;background:#fff;margin:8px 0}.quest.done{background:#edf7e8}.qcheck{width:38px;height:38px;border:2px solid #dbd0c1;border-radius:12px;background:white;font-size:20px}.quest.done .qcheck{background:var(--green);color:white;border-color:var(--green)}.xp{font-size:11px;font-weight:900;color:#4f8c3b;background:#edf6e7;padding:6px 8px;border-radius:999px}
+.boss{background:radial-gradient(circle at top,#4b3e62,#252133 60%);color:white}.bossmonster{font-size:78px;text-align:center}.bossname{text-align:center;font-size:25px;font-weight:1000}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statcard{padding:14px;background:#fff;border:1px solid var(--line);border-radius:18px}
+.measure-row{display:grid;grid-template-columns:1fr 95px;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.measure-row:last-child{border:0}.measure-row input{width:100%;padding:10px;border:1px solid #ddd0bf;border-radius:12px;text-align:right;background:#fff}
+.chart{width:100%;height:220px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.reward{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:8px 0}.reward .emoji{font-size:28px}
+.nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr);z-index:40;background:rgba(255,253,248,.97);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom))}.nav button{border:0;background:none;color:#837a70;font-size:10px;font-weight:900}.nav span{display:block;font-size:21px}.nav button.active{color:var(--green-dark)}
+.modal{width:min(92%,430px);border:0;border-radius:24px;padding:0}.modal::backdrop{background:rgba(0,0,0,.35)}.modal form{padding:20px}.modal label{display:block;font-size:12px;font-weight:800;margin-top:12px}.modal input{width:100%;padding:12px;border:1px solid #ddd0bf;border-radius:12px;margin-top:6px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%) translateY(10px);background:#26221e;color:white;padding:11px 15px;border-radius:999px;font-size:12px;font-weight:900;opacity:0;transition:.22s;z-index:100}.toast.show{opacity:1;transform:translateX(-50%)}
+.spark{position:fixed;inset:0;pointer-events:none;z-index:90}.spark i{position:absolute;top:-15px;animation:fall 1.4s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(500deg);opacity:.2}}
+@media(max-width:420px){.hero{grid-template-columns:1fr 125px}.hamster{width:125px;height:125px}.hero h2{font-size:21px}}
 </style>
-  <title>BODY QUEST</title>
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">MY HEALTH RPG</p>
-        <h1>BODY QUEST</h1>
+<div class="app">
+<header class="topbar"><div class="brand">🌿 BODY QUEST</div><button class="gear" id="settingsBtn">⚙️</button></header>
+<main>
+<section id="home" class="screen active">
+  <div class="card hero">
+    <div>
+      <span class="badge">Lv.<span id="level">1</span> <span id="title">BODY BEGINNER</span></span>
+      <h2>오늘도 한 칸만 전진!</h2>
+      <div class="bar"><div class="fill" id="levelBar"></div></div>
+      <div class="muted" style="margin-top:5px"><span id="levelXp">0 / 100 XP</span> · 총 <b id="totalXp">0</b> XP</div>
+      <div class="minirow">
+        <div class="mini">⭐ XP<b id="wallet">0</b></div>
+        <div class="mini">🛡️ 쉴드<b id="shield">1</b></div>
+        <div class="mini">🔥 연속<b><span id="streak">0</span>일</b></div>
       </div>
-      <button id="settingsBtn" class="icon-btn" aria-label="설정">⚙️</button>
-    </header>
-
-    <main>
-      <section id="home" class="screen active">
-        <div class="hero-card">
-          <div class="hero-copy">
-            <div class="level-pill">Lv.<span id="heroLevel">1</span> · <span id="heroTitle">BODY BEGINNER</span></div>
-            <h2 id="greeting">오늘도 한 칸만 전진!</h2>
-            <p>몸무게가 아니라, 오늘의 좋은 선택이 캐릭터를 키워요.</p>
-            <div class="xp-track">
-              <div id="levelXpBar" class="xp-fill"></div>
-            </div>
-            <div class="xp-row"><span id="levelXpText">0 / 100 XP</span><strong id="totalXpText">총 0 XP</strong></div>
-          </div>
-          <div class="avatar-wrap">
-            <div id="avatar" class="avatar">🌱</div>
-            <div id="levelBurst" class="level-burst">LEVEL UP!</div>
-          </div>
-        </div>
-
-        <div class="grid two">
-          <button class="metric-card editable" id="weightCard">
-            <span>현재 체중</span><strong><span id="currentWeight">59.2</span> kg</strong><small>눌러서 기록</small>
-          </button>
-          <div class="metric-card">
-            <span>목표 체중</span><strong><span id="targetWeight">49.0</span> kg</strong><small id="remainingWeight">목표까지 10.2kg</small>
-          </div>
-        </div>
-
-        <div class="card progress-card">
-          <div class="card-head">
-            <div><span class="label">GOAL JOURNEY</span><h3>목표 여정</h3></div>
-            <strong id="goalPercent">0%</strong>
-          </div>
-          <div class="progress-track"><div id="goalBar" class="progress-fill"></div></div>
-          <p class="muted">하루 체중은 수분·식사 등에 따라 흔들릴 수 있어요. 성공/실패 판정에는 사용하지 않아요.</p>
-        </div>
-
-        <div class="grid three mini-metrics">
-          <div class="metric-card"><span>오늘 XP</span><strong id="todayXp">0</strong></div>
-          <div class="metric-card"><span>연속 달성</span><strong>🔥 <span id="streak">0</span>일</strong></div>
-          <div class="metric-card"><span>회복권</span><strong>🛡️ <span id="shieldCount">1</span></strong></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head">
-            <div><span class="label">TODAY'S QUEST</span><h3>오늘의 퀘스트</h3></div>
-            <button class="text-btn" data-nav="quest">전체보기</button>
-          </div>
-          <div id="homeQuestList" class="quest-list"></div>
-        </div>
-
-        <div id="bossHome" class="boss-card"></div>
-      </section>
-
-      <section id="quest" class="screen">
-        <div class="section-title">
-          <div><span class="label">QUEST BOARD</span><h2>오늘의 모험</h2></div>
-          <div class="streak-chip">🔥 <span id="questStreak">0</span>일</div>
-        </div>
-
-        <div class="card">
-          <div class="card-head">
-            <h3>오늘의 퀘스트</h3><span id="dailyDoneCount" class="soft-chip">0/0</span>
-          </div>
-          <div id="questList" class="quest-list"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>주간 퀘스트</h3><span class="soft-chip">BONUS</span></div>
-          <div id="weeklyQuestList" class="quest-list"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>특별 퀘스트</h3><span class="soft-chip">OPTIONAL</span></div>
-          <div id="specialQuestList" class="quest-list"></div>
-        </div>
-
-        <div id="bossCard" class="boss-card"></div>
-
-        <button id="restDayBtn" class="secondary-btn">🌙 오늘은 회복 데이로 기록하기</button>
-      </section>
-
-      <section id="stats" class="screen">
-        <div class="section-title"><div><span class="label">CHARACTER STATS</span><h2>나의 능력치</h2></div></div>
-        <div id="statCards" class="stats-grid"></div>
-        <div class="card">
-          <span class="label">HOW IT WORKS</span>
-          <h3>운동하면 스탯도 함께 성장해요</h3>
-          <p class="muted">예: 레그프레스 → 하체, 푸시업 → 상체, 플랭크 → 코어, 러닝 → 체력. 식사와 수면 습관도 각각 식습관·회복 스탯을 올립니다.</p>
-        </div>
-      </section>
-
-      <section id="progress" class="screen">
-        <div class="section-title"><div><span class="label">PROGRESS</span><h2>성장 기록</h2></div></div>
-        <div class="card">
-          <div class="card-head"><h3>체중 흐름</h3><span id="weightTrend" class="soft-chip">기록 시작</span></div>
-          <canvas id="weightChart" width="720" height="320"></canvas>
-          <p class="muted">점 하나보다 7일 이상의 흐름을 보는 용도예요.</p>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>최근 XP</h3><span class="soft-chip">7 DAYS</span></div>
-          <canvas id="xpChart" width="720" height="300"></canvas>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>최근 운동 기록</h3><button id="addWorkoutBtn" class="text-btn">+ 운동 추가</button></div>
-          <div id="workoutLog" class="log-list"></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><h3>연속 달성 기록</h3><span class="soft-chip">🔥 BEST <span id="bestStreak">0</span></span></div>
-          <p class="muted">하루를 놓쳐도 회복권이 있으면 연속 기록을 보호할 수 있어요. 회복 데이는 실패가 아니라 훈련의 일부로 기록됩니다.</p>
-        </div>
-      </section>
-
-      <section id="reward" class="screen">
-        <div class="section-title"><div><span class="label">REWARD SHOP</span><h2>나를 위한 보상</h2></div><div class="xp-wallet">✨ <span id="walletXp">0</span> XP</div></div>
-        <div id="rewardList" class="reward-list"></div>
-        <button id="addRewardBtn" class="primary-btn">+ 새 보상 추가</button>
-      </section>
-    </main>
-
-    <nav class="bottom-nav">
-      <button class="nav-item active" data-target="home"><span>🏠</span><small>HOME</small></button>
-      <button class="nav-item" data-target="quest"><span>⚔️</span><small>QUEST</small></button>
-      <button class="nav-item" data-target="stats"><span>💪</span><small>STATS</small></button>
-      <button class="nav-item" data-target="progress"><span>📈</span><small>PROGRESS</small></button>
-      <button class="nav-item" data-target="reward"><span>🎁</span><small>REWARD</small></button>
-    </nav>
+    </div>
+    <svg class="hamster" viewBox="0 0 180 180" aria-label="귀여운 햄찌 캐릭터">
+      <ellipse cx="92" cy="162" rx="53" ry="10" fill="#dfe9c8"/>
+      <circle cx="54" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/>
+      <circle cx="130" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/>
+      <circle cx="54" cy="49" r="10" fill="#fff7ed"/>
+      <circle cx="130" cy="49" r="10" fill="#fff7ed"/>
+      <path d="M39 65 C40 30 143 27 148 72 C153 109 143 146 93 151 C44 149 28 118 39 65Z" fill="#fff9f0" stroke="#3a3029" stroke-width="4"/>
+      <ellipse cx="56" cy="94" rx="13" ry="8" fill="#f5b8ac" opacity=".82"/>
+      <ellipse cx="127" cy="94" rx="13" ry="8" fill="#f5b8ac" opacity=".82"/>
+      <circle cx="68" cy="81" r="5.5" fill="#25201c"/>
+      <circle cx="116" cy="81" r="5.5" fill="#25201c"/>
+      <circle cx="70" cy="79" r="1.5" fill="white"/>
+      <circle cx="118" cy="79" r="1.5" fill="white"/>
+      <path d="M88 91 Q92 95 96 91" fill="none" stroke="#25201c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M92 93 Q92 105 82 105 M92 93 Q92 105 102 105" fill="none" stroke="#25201c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M52 112 Q92 126 136 111 L129 126 Q92 138 58 126Z" fill="#68a84f" stroke="#3a3029" stroke-width="4"/>
+      <path d="M124 119 L150 110 L137 132Z" fill="#68a84f" stroke="#3a3029" stroke-width="4"/>
+      <path d="M53 129 Q94 140 134 128" fill="none" stroke="#b57b3c" stroke-width="10" stroke-linecap="round"/>
+      <rect x="85" y="127" width="17" height="12" rx="3" fill="#f4bb3a" stroke="#3a3029" stroke-width="3"/>
+      <path d="M33 126 L20 155" stroke="#8e6239" stroke-width="8" stroke-linecap="round"/>
+      <path d="M20 155 L42 128" stroke="#3a3029" stroke-width="4" stroke-linecap="round"/>
+      <path d="M29 118 L11 139 L20 148 L40 127Z" fill="#c98b4e" stroke="#3a3029" stroke-width="4"/>
+      <path d="M44 115 Q32 118 30 130" fill="none" stroke="#3a3029" stroke-width="4" stroke-linecap="round"/>
+      <path d="M137 114 Q151 118 150 132" fill="none" stroke="#3a3029" stroke-width="4" stroke-linecap="round"/>
+      <g id="sparkles">
+        <path d="M154 62 l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#ffc743"/>
+        <path d="M22 72 l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffc743"/>
+      </g>
+    </svg>
   </div>
 
-  <dialog id="weightDialog" class="modal">
-    <form method="dialog">
-      <h3>오늘 체중 기록</h3>
-      <p class="muted">숫자는 평가가 아니라 관찰용 데이터예요.</p>
-      <label>체중 (kg)<input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" required /></label>
-      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveWeightBtn" value="default" class="primary-btn">저장</button></div>
-    </form>
-  </dialog>
+  <div class="card daycard">
+    <span class="badge" id="dayBadge">DAY 1</span>
+    <div class="daytitle" id="dayTitle">모험의 시작! 🌱</div>
+    <div class="muted" id="dayLine">오늘의 목표: 완벽하게 말고, 시작하기!</div>
+    <button class="btn green" style="margin-top:12px" onclick="navTo('quest')">오늘의 퀘스트 보기 ›</button>
+  </div>
 
-  <dialog id="workoutDialog" class="modal">
-    <form method="dialog">
-      <h3>운동 기록 추가</h3>
-      <label>운동 이름<input id="workoutName" placeholder="예: 레그프레스" required /></label>
-      <label>분류
-        <select id="workoutStat">
-          <option value="lower">🦵 하체</option><option value="upper">💪 상체</option>
-          <option value="core">🧘 코어</option><option value="stamina">🫀 체력</option>
-        </select>
-      </label>
-      <label>운동 시간 (분)<input id="workoutMinutes" type="number" inputmode="numeric" min="1" max="300" value="30" required /></label>
-      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveWorkoutBtn" value="default" class="primary-btn">저장 + XP</button></div>
-    </form>
-  </dialog>
+  <div class="card">
+    <div style="font-weight:900;margin-bottom:10px">오늘의 한마디</div>
+    <div style="display:grid;grid-template-columns:1fr 100px;align-items:center">
+      <div id="dailyMessage" style="font-size:16px;font-weight:900;line-height:1.6">작은 선택이<br>내일의 나를 만든다!</div>
+      <svg class="hamster small" viewBox="0 0 180 180"><circle cx="54" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><circle cx="130" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><path d="M39 65 C40 30 143 27 148 72 C153 109 143 146 93 151 C44 149 28 118 39 65Z" fill="#fff9f0" stroke="#3a3029" stroke-width="4"/><ellipse cx="56" cy="94" rx="13" ry="8" fill="#f5b8ac"/><ellipse cx="127" cy="94" rx="13" ry="8" fill="#f5b8ac"/><circle cx="68" cy="81" r="5.5"/><circle cx="116" cy="81" r="5.5"/><path d="M88 91 Q92 95 96 91 M92 93 Q92 105 82 105 M92 93 Q92 105 102 105" fill="none" stroke="#25201c" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+  </div>
 
-  <dialog id="rewardDialog" class="modal">
-    <form method="dialog">
-      <h3 id="rewardDialogTitle">새 보상 추가</h3>
-      <input id="rewardEditId" type="hidden" />
-      <label>보상 이름<input id="rewardName" placeholder="예: 뜨개실" required /></label>
-      <label>필요 XP<input id="rewardCost" type="number" inputmode="numeric" min="10" step="10" value="100" required /></label>
-      <label>아이콘<input id="rewardEmoji" value="🎁" maxlength="4" /></label>
-      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveRewardBtn" value="default" class="primary-btn">저장</button></div>
-    </form>
-  </dialog>
+  <div class="card">
+    <div style="font-weight:900;margin-bottom:12px">몸 변화 기록</div>
+    <div class="grid2">
+      <div><div class="muted">현재 체중</div><div style="font-size:28px;font-weight:1000"><span id="weightNow">59.2</span> kg</div></div>
+      <button class="btn green" onclick="openWeight()">체중 기록</button>
+    </div>
+    <div class="bar" style="margin-top:12px"><div class="fill" id="weightGoalBar"></div></div>
+    <div class="muted" style="margin-top:5px">목표 <b id="weightGoal">49.0</b>kg · 남은 <span id="weightRemain">10.2</span>kg</div>
+    <button class="btn ghost" style="margin-top:10px" onclick="navTo('progress')">📏 둘레·변화 기록 보기</button>
+  </div>
+</section>
 
-  <dialog id="settingsDialog" class="modal">
-    <form method="dialog">
-      <h3>BODY QUEST 설정</h3>
-      <label>시작 체중 (kg)<input id="startWeightInput" type="number" step="0.1" /></label>
-      <label>목표 체중 (kg)<input id="targetWeightInput" type="number" step="0.1" /></label>
-      <p class="muted">목표 날짜는 일부러 넣지 않았어요. 속도보다 지속 가능한 습관을 우선합니다.</p>
-      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveSettingsBtn" value="default" class="primary-btn">저장</button></div>
-    </form>
-  </dialog>
+<section id="quest" class="screen">
+  <div class="sectiontitle" id="questDayTitle">DAY 1 · 모험의 시작</div>
+  <div class="card">
+    <div class="muted">오늘의 퀘스트야! 하나씩 클리어해보자구 🐹</div>
+    <div id="questList"></div>
+    <div style="margin-top:12px"><b>퀘스트 진행도</b><div class="bar" style="margin-top:7px"><div class="fill" id="questProgress"></div></div><div class="muted" id="questCount" style="margin-top:5px"></div></div>
+    <button class="btn green" id="dayClearBtn" style="margin-top:12px">DAY CLEAR 보상 받기 ✨</button>
+  </div>
+  <div class="card boss">
+    <div class="bossname">WEEK 1 · 보스전</div>
+    <div class="bossmonster">😾</div>
+    <div style="text-align:center;font-size:20px;font-weight:1000">게으름 몬스터</div>
+    <div class="bar" style="margin-top:12px;background:#191622"><div class="fill" id="bossBar" style="background:linear-gradient(90deg,#ef684f,#f39850)"></div></div>
+    <div style="text-align:center;margin:7px 0">HP <span id="bossHp">500</span> / 500</div>
+    <button class="btn gold" onclick="bossAttack()">공격하기! ⚔️</button>
+  </div>
+</section>
 
-  <div id="toast" class="toast"></div>
-  <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
+<section id="character" class="screen">
+  <div class="sectiontitle">내 캐릭터</div>
+  <div class="card" style="text-align:center">
+    <svg class="hamster" viewBox="0 0 180 180"><ellipse cx="92" cy="162" rx="53" ry="10" fill="#dfe9c8"/><circle cx="54" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><circle cx="130" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><path d="M39 65 C40 30 143 27 148 72 C153 109 143 146 93 151 C44 149 28 118 39 65Z" fill="#fff9f0" stroke="#3a3029" stroke-width="4"/><ellipse cx="56" cy="94" rx="13" ry="8" fill="#f5b8ac"/><ellipse cx="127" cy="94" rx="13" ry="8" fill="#f5b8ac"/><circle cx="68" cy="81" r="5.5"/><circle cx="116" cy="81" r="5.5"/><circle cx="70" cy="79" r="1.5" fill="#fff"/><circle cx="118" cy="79" r="1.5" fill="#fff"/><path d="M88 91 Q92 95 96 91 M92 93 Q92 105 82 105 M92 93 Q92 105 102 105" fill="none" stroke="#25201c" stroke-width="3" stroke-linecap="round"/><path d="M52 112 Q92 126 136 111 L129 126 Q92 138 58 126Z" fill="#68a84f" stroke="#3a3029" stroke-width="4"/><path d="M53 129 Q94 140 134 128" fill="none" stroke="#b57b3c" stroke-width="10" stroke-linecap="round"/><rect x="85" y="127" width="17" height="12" rx="3" fill="#f4bb3a" stroke="#3a3029" stroke-width="3"/><path d="M33 126 L20 155" stroke="#8e6239" stroke-width="8" stroke-linecap="round"/><path d="M29 118 L11 139 L20 148 L40 127Z" fill="#c98b4e" stroke="#3a3029" stroke-width="4"/></svg>
+    <div style="font-size:23px;font-weight:1000">Lv.<span id="charLevel">1</span> 햄지</div>
+    <div class="muted">퀘스트를 깨며 천천히 강해지는 중 ✨</div>
+  </div>
+  <div id="statGrid" class="grid2"></div>
+  <div class="card">
+    <b>장비</b>
+    <div class="reward"><div class="emoji">🗡️</div><div><b>나무 검</b><div class="muted">공격력 +5</div></div><span class="badge">Lv.1</span></div>
+    <div class="reward"><div class="emoji">🧣</div><div><b>초록 스카프</b><div class="muted">HP +10</div></div><span class="badge">Lv.2</span></div>
+    <div class="reward"><div class="emoji">🟤</div><div><b>허리띠</b><div class="muted">방어력 +3</div></div><span class="badge">Lv.1</span></div>
+  </div>
+</section>
 
-  <script>
+<section id="progress" class="screen">
+  <div class="sectiontitle">기록</div>
+  <div class="card"><b>체중 흐름</b><canvas id="weightChart" class="chart" width="700" height="220"></canvas></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center"><b>둘레 기록</b><span class="muted">cm</span></div>
+    <div id="measureRows"></div>
+    <button class="btn green" style="margin-top:12px" onclick="saveMeasures()">둘레 기록하기</button>
+    <div class="muted" style="margin-top:9px">조금씩 줄어들고 있어! 우리 햄지 최고야 ❤️</div>
+  </div>
+</section>
 
-const KEY = "bodyQuest.v1";
-const todayKey = () => new Date().toISOString().slice(0,10);
-const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("ko-KR",{month:"numeric",day:"numeric"});
-const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+<section id="shop" class="screen">
+  <div class="sectiontitle">상점 <span class="badge">⭐ <span id="shopXp">0</span></span></div>
+  <div id="rewardList"></div>
+  <button class="btn green" onclick="openReward()">+ 새 보상 추가</button>
+</section>
+</main>
 
-const defaultQuests = [
-  {id:"water",name:"물 충분히 마시기",xp:10,stat:"recovery",statXp:8,icon:"💧"},
-  {id:"protein",name:"단백질 챙기기",xp:15,stat:"nutrition",statXp:10,icon:"🥚"},
-  {id:"move30",name:"30분 운동",xp:30,stat:"stamina",statXp:14,icon:"🏃"},
-  {id:"strength",name:"근력운동 하기",xp:20,stat:"upper",statXp:10,icon:"🏋️"},
-  {id:"sleep7",name:"7시간 이상 수면",xp:10,stat:"recovery",statXp:10,icon:"😴"},
-  {id:"lateSnack",name:"야식 줄이기",xp:10,stat:"nutrition",statXp:8,icon:"🌙"}
+<nav class="nav">
+<button data-nav="home" class="active"><span>🏠</span>홈</button>
+<button data-nav="quest"><span>🗺️</span>퀘스트</button>
+<button data-nav="character"><span>🐹</span>캐릭터</button>
+<button data-nav="progress"><span>📊</span>기록</button>
+<button data-nav="shop"><span>🏪</span>상점</button>
+</nav>
+</div>
+
+<dialog id="weightModal" class="modal"><form method="dialog"><h3>오늘 체중 기록</h3><label>체중 (kg)<input id="weightInput" type="number" step="0.1"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveWeight" value="default">저장</button></div></form></dialog>
+<dialog id="rewardModal" class="modal"><form method="dialog"><h3>새 보상 추가</h3><label>보상 이름<input id="rewardName"></label><label>필요 XP<input id="rewardCost" type="number" value="100"></label><label>아이콘<input id="rewardEmoji" value="🎁"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveReward" value="default">저장</button></div></form></dialog>
+<dialog id="settingsModal" class="modal"><form method="dialog"><h3>설정</h3><label>시작 체중<input id="startWeightInput" type="number" step="0.1"></label><label>목표 체중<input id="goalWeightInput" type="number" step="0.1"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveSettings" value="default">저장</button></div></form></dialog>
+<div class="toast" id="toast"></div><div class="spark" id="spark"></div>
+
+<script>
+const KEY="bodyQuest.v2";
+const today=()=>new Date().toISOString().slice(0,10);
+const dayDiff=(a,b)=>Math.floor((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/86400000);
+const questSets=[
+ {title:"모험의 시작! 🌱",line:"오늘의 목표: 완벽하게 말고, 시작하기!",qs:[["💧","물 1.5L 마시기",10,"recovery"],["🥚","단백질 한 끼 챙기기",15,"nutrition"],["👟","20분 이상 움직이기",20,"stamina"],["🏋️","오늘의 운동 미션 수행",30,"upper"],["🌙","7시간 수면 준비하기",10,"recovery"]]},
+ {title:"하체의 날 🦵",line:"튼튼한 다리가 모험의 기본!",qs:[["💧","물 챙겨 마시기",10,"recovery"],["🥗","채소 한 끼 챙기기",15,"nutrition"],["🦵","하체 운동 20분",30,"lower"],["🚶","가볍게 15분 걷기",15,"stamina"],["😴","충분히 자기",10,"recovery"]]},
+ {title:"회복의 날 🌿",line:"쉬는 것도 훈련이야.",qs:[["💧","물 충분히 마시기",10,"recovery"],["🧘","스트레칭 10분",15,"core"],["🥚","단백질 챙기기",15,"nutrition"],["🌙","야식 줄이기",10,"nutrition"],["😴","7시간 이상 수면",15,"recovery"]]},
+ {title:"코어 수련 🧘",line:"중심이 단단하면 모험도 안정적!",qs:[["💧","물 마시기",10,"recovery"],["🧘","플랭크/코어 10분",25,"core"],["👟","20분 움직이기",20,"stamina"],["🥗","균형 잡힌 식사",15,"nutrition"],["😴","충분히 자기",10,"recovery"]]},
+ {title:"체력 던전 🫀",line:"조금 숨차도 괜찮아!",qs:[["💧","물 충분히 마시기",10,"recovery"],["🏃","유산소 30분",30,"stamina"],["🥚","단백질 챙기기",15,"nutrition"],["🧘","마무리 스트레칭",10,"core"],["🌙","야식 줄이기",10,"nutrition"]]},
+ {title:"자유 운동 ⚔️",line:"오늘은 하고 싶은 운동으로!",qs:[["💧","물 마시기",10,"recovery"],["🏋️","좋아하는 운동 30분",30,"upper"],["👟","산책 15분",15,"stamina"],["🥗","채소 챙기기",15,"nutrition"],["😴","회복 챙기기",10,"recovery"]]},
+ {title:"주간 보스전 🐲",line:"이번 주의 나를 칭찬하며 마무리!",qs:[["💧","물 충분히 마시기",10,"recovery"],["🏋️","가벼운 전신운동",25,"upper"],["🧘","스트레칭 10분",15,"core"],["🥚","단백질 챙기기",15,"nutrition"],["📝","이번 주 잘한 점 하나 적기",15,"recovery"]]}
 ];
-const weeklyQuests = [
-  {id:"w_strength3",name:"이번 주 근력운동 3회",xp:70,icon:"⚡",target:3,type:"strengthCount"},
-  {id:"w_move150",name:"이번 주 운동 150분",xp:80,icon:"🗺️",target:150,type:"minutes"}
-];
-const specialQuests = [
-  {id:"s_walk",name:"기분전환 산책 20분",xp:20,icon:"🌿",stat:"recovery",statXp:8},
-  {id:"s_stretch",name:"스트레칭 10분",xp:15,icon:"🧘",stat:"core",statXp:6}
-];
-const statMeta = {
-  lower:{name:"하체",icon:"🦵"}, upper:{name:"상체",icon:"💪"}, core:{name:"코어",icon:"🧘"},
-  stamina:{name:"체력",icon:"🫀"}, nutrition:{name:"식습관",icon:"🥗"}, recovery:{name:"회복",icon:"😴"}
-};
-const titles = [
-  {level:1,title:"BODY BEGINNER",avatar:"🌱"},
-  {level:5,title:"BODY GROWER",avatar:"🌿"},
-  {level:10,title:"BODY BUILDER",avatar:"🌳"},
-  {level:20,title:"BODY MASTER",avatar:"👑"}
-];
-
-function initialState(){
-  const t=todayKey();
-  return {
-    profile:{startWeight:59.2,targetWeight:49,currentWeight:59.2},
-    xp:{total:0,spent:0},
-    stats:{lower:0,upper:0,core:0,stamina:0,nutrition:0,recovery:0},
-    daily:{[t]:{completed:{},xp:0,rest:false}},
-    special:{[t]:{}},
-    weeklyClaims:{},
-    weights:[{date:t,value:59.2}],
-    workouts:[],
-    streak:{current:0,best:0,lastQualified:null,shields:1,lastShieldAwardLevel:0},
-    boss:{date:t,name:"운동하기 싫음",icon:"🐲",maxHp:60,hp:60,defeated:false,reward:50},
-    rewards:[
-      {id:"r1",name:"카페 음료",cost:100,emoji:"☕"},
-      {id:"r2",name:"뜨개실",cost:300,emoji:"🧶"},
-      {id:"r3",name:"운동복",cost:500,emoji:"👟"},
-      {id:"r4",name:"맛있는 외식",cost:800,emoji:"🍽️"},
-      {id:"r5",name:"사고 싶었던 물건",cost:1500,emoji:"✨"}
-    ],
-    redemptions:[]
-  };
+const statNames={lower:"🦵 하체",upper:"💪 상체",core:"🧘 코어",stamina:"🫀 체력",nutrition:"🥗 식습관",recovery:"😴 회복"};
+function initial(){
+ const t=today(); return {startDate:t,profile:{startWeight:59.2,goalWeight:49,currentWeight:59.2},xp:{total:0,spent:0},streak:{current:0,best:0,shield:1,last:null},stats:{lower:0,upper:0,core:0,stamina:0,nutrition:0,recovery:0},days:{},weights:[{date:t,value:59.2}],measures:{},boss:{hp:500},rewards:[["☕","카페 음료",100],["🧶","뜨개실",300],["👟","운동복",500],["🍽️","맛있는 외식",800],["✨","사고 싶었던 물건",1500]].map((x,i)=>({id:"r"+i,emoji:x[0],name:x[1],cost:x[2]}))}
 }
-let state = load();
-function load(){
-  try{
-    const raw=localStorage.getItem(KEY);
-    if(!raw) return initialState();
-    return Object.assign(initialState(), JSON.parse(raw));
-  }catch(e){return initialState();}
-}
-function save(){localStorage.setItem(KEY,JSON.stringify(state));}
-function ensureToday(){
-  const t=todayKey();
-  if(!state.daily[t]) state.daily[t]={completed:{},xp:0,rest:false};
-  if(!state.special[t]) state.special[t]={};
-  if(!state.boss || state.boss.date!==t){
-    state.boss={date:t,name:"운동하기 싫음",icon:"🐲",maxHp:60,hp:60,defeated:false,reward:50};
-  }
-}
-function levelInfo(total=state.xp.total){
-  let level=Math.floor(total/100)+1;
-  let within=total%100;
-  let ti=titles[0];
-  titles.forEach(x=>{if(level>=x.level)ti=x});
-  return {level,within,title:ti.title,avatar:ti.avatar};
-}
-function availableXp(){return Math.max(0,state.xp.total-state.xp.spent);}
-function addXp(amount,stat=null,statXp=0,msg="XP 획득!"){
-  const before=levelInfo().level;
-  state.xp.total+=amount;
-  if(stat) state.stats[stat]=(state.stats[stat]||0)+statXp;
-  const after=levelInfo().level;
-  if(after>before){celebrateLevel(); maybeAwardShield(after);}
-  toast(`+${amount} XP · ${msg}`);
-  save(); render();
-}
-function maybeAwardShield(level){
-  if(level>=5 && level%5===0 && state.streak.lastShieldAwardLevel!==level){
-    state.streak.shields+=1; state.streak.lastShieldAwardLevel=level;
-    toast("🛡️ 레벨 보너스! 회복권 +1");
-  }
-}
-function updateStreak(){
-  const t=todayKey(), day=state.daily[t];
-  const completed=Object.keys(day.completed||{}).filter(k=>day.completed[k]).length;
-  const qualified=completed>=3 || day.rest;
-  if(!qualified) return;
-  if(state.streak.lastQualified===t) return;
-  const y=new Date(); y.setDate(y.getDate()-1);
-  const yk=y.toISOString().slice(0,10);
-  if(state.streak.lastQualified===yk || !state.streak.lastQualified){
-    state.streak.current+=1;
-  }else{
-    if(state.streak.shields>0){
-      state.streak.shields-=1;
-      state.streak.current+=1;
-      toast("🛡️ 회복권이 연속 기록을 지켜줬어요!");
-    }else state.streak.current=1;
-  }
-  state.streak.lastQualified=t;
-  state.streak.best=Math.max(state.streak.best,state.streak.current);
-}
-function toggleQuest(id){
-  ensureToday();
-  const q=defaultQuests.find(x=>x.id===id), day=state.daily[todayKey()];
-  if(!q || day.completed[id]) return;
-  day.completed[id]=true; day.xp+=q.xp;
-  damageBoss(q.xp>=20?20:10,false);
-  addXp(q.xp,q.stat,q.statXp,q.name+" 완료");
-  updateStreak(); save(); render(); burstAtCenter(q.icon);
-}
-function toggleSpecial(id){
-  const q=specialQuests.find(x=>x.id===id), map=state.special[todayKey()];
-  if(!q || map[id]) return;
-  map[id]=true;
-  addXp(q.xp,q.stat,q.statXp,q.name+" 완료"); updateStreak(); save(); render();
-}
-function weekStartKey(){
-  const d=new Date(); const day=(d.getDay()+6)%7; d.setDate(d.getDate()-day); return d.toISOString().slice(0,10);
-}
-function weekWorkouts(){
-  const start=weekStartKey(); return state.workouts.filter(w=>w.date>=start);
-}
-function weeklyProgress(q){
-  const ws=weekWorkouts();
-  if(q.type==="minutes") return ws.reduce((a,b)=>a+(+b.minutes||0),0);
-  if(q.type==="strengthCount") return ws.filter(w=>["lower","upper","core"].includes(w.stat)).length;
-  return 0;
-}
-function claimWeekly(id){
-  const q=weeklyQuests.find(x=>x.id===id), key=weekStartKey()+"_"+id;
-  if(!q || state.weeklyClaims[key]) return;
-  if(weeklyProgress(q)<q.target){toast("아직 목표를 채우는 중이에요!");return;}
-  state.weeklyClaims[key]=true; addXp(q.xp,null,0,"주간 퀘스트 보너스");
-}
-function damageBoss(dmg,award=true){
-  const b=state.boss; if(b.defeated) return;
-  b.hp=Math.max(0,b.hp-dmg);
-  if(b.hp===0){b.defeated=true;if(award){addXp(b.reward,null,0,"보스 처치 보너스");}else{setTimeout(()=>addXp(b.reward,null,0,"보스 처치 보너스"),80)}}
-  save();
-}
-function bossAttack(){
-  if(state.boss.defeated)return;
-  if((state.workouts||[]).some(w=>w.date===todayKey())){
-    damageBoss(30);
-    toast("⚔️ 오늘 운동의 힘으로 보스에게 30 데미지!");
-  }else toast("오늘 운동 기록을 먼저 남기면 공격할 수 있어요!");
-}
-function markRestDay(){
-  const d=state.daily[todayKey()];
-  if(d.rest){toast("이미 회복 데이로 기록했어요.");return;}
-  d.rest=true; state.stats.recovery+=12;
-  updateStreak(); save(); render(); toast("🌙 회복도 훈련이에요. 회복 +12");
-}
-function addWorkout(name,stat,minutes){
-  const xp=Math.min(50,Math.max(10,Math.round(minutes/5)*5));
-  state.workouts.unshift({id:Date.now().toString(),date:todayKey(),name,stat,minutes:+minutes,xp});
-  state.stats[stat]=(state.stats[stat]||0)+Math.min(20,Math.round(minutes/3));
-  state.xp.total+=xp;
-  damageBoss(30,false);
-  save(); render(); toast(`🏋️ 운동 기록! +${xp} XP`);
-}
-function saveWeight(value){
-  const v=+value;if(!v||v<30||v>250)return;
-  state.profile.currentWeight=v;
-  const t=todayKey(), found=state.weights.find(w=>w.date===t);
-  if(found) found.value=v; else state.weights.push({date:t,value:v});
-  state.weights.sort((a,b)=>a.date.localeCompare(b.date));
-  save();render();toast("📈 기록 완료. 숫자에는 점수나 감점이 없어요.");
-}
-function rewardRedeem(id){
-  const r=state.rewards.find(x=>x.id===id); if(!r)return;
-  if(availableXp()<r.cost){toast("XP가 조금 더 필요해요!");return;}
-  state.xp.spent+=r.cost; state.redemptions.push({id:Date.now().toString(),rewardId:id,date:todayKey(),cost:r.cost});
-  save();render();toast(`${r.emoji} ${r.name} 보상 획득!`);
-  confetti();
-}
-function rewardEdit(id){
-  const r=state.rewards.find(x=>x.id===id);
-  document.querySelector("#rewardDialogTitle").textContent=r?"보상 수정":"새 보상 추가";
-  document.querySelector("#rewardEditId").value=r?.id||"";
-  document.querySelector("#rewardName").value=r?.name||"";
-  document.querySelector("#rewardCost").value=r?.cost||100;
-  document.querySelector("#rewardEmoji").value=r?.emoji||"🎁";
-  document.querySelector("#rewardDialog").showModal();
-}
-function saveReward(){
-  const id=document.querySelector("#rewardEditId").value,name=document.querySelector("#rewardName").value.trim(),
-  cost=+document.querySelector("#rewardCost").value,emoji=document.querySelector("#rewardEmoji").value||"🎁";
-  if(!name||!cost)return;
-  if(id){const r=state.rewards.find(x=>x.id===id);Object.assign(r,{name,cost,emoji});}
-  else state.rewards.push({id:"r"+Date.now(),name,cost,emoji});
-  save();render();toast("보상 목록을 저장했어요.");
-}
+let s=(()=>{try{return Object.assign(initial(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return initial()}})();
+function save(){localStorage.setItem(KEY,JSON.stringify(s))}
+function dayNum(){return Math.max(1,dayDiff(s.startDate,today())+1)}
+function dayState(){const k=today(); if(!s.days[k]) s.days[k]={done:{},cleared:false}; return s.days[k]}
+function level(){return Math.floor(s.xp.total/100)+1}
+function title(){const l=level(); return l>=20?"BODY MASTER":l>=10?"BODY BUILDER":l>=5?"BODY GROWER":"BODY BEGINNER"}
+function setText(id,v){document.getElementById(id).textContent=v}
+function navTo(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.nav===id));window.scrollTo(0,0);if(id==="progress")drawWeight()}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>navTo(b.dataset.nav))
 function render(){
-  ensureToday();
-  const li=levelInfo(), p=state.profile, day=state.daily[todayKey()];
-  qs("#heroLevel").textContent=li.level; qs("#heroTitle").textContent=li.title; qs("#avatar").textContent=li.avatar;
-  qs("#levelXpBar").style.width=li.within+"%"; qs("#levelXpText").textContent=`${li.within} / 100 XP`;
-  qs("#totalXpText").textContent=`총 ${state.xp.total} XP`;
-  qs("#currentWeight").textContent=(+p.currentWeight).toFixed(1); qs("#targetWeight").textContent=(+p.targetWeight).toFixed(1);
-  const totalDiff=Math.abs(p.startWeight-p.targetWeight)||1, doneDiff=Math.abs(p.startWeight-p.currentWeight);
-  const progress=clamp(doneDiff/totalDiff*100,0,100);
-  qs("#goalBar").style.width=progress+"%";qs("#goalPercent").textContent=Math.round(progress)+"%";
-  qs("#remainingWeight").textContent=`목표까지 ${Math.abs(p.currentWeight-p.targetWeight).toFixed(1)}kg`;
-  qs("#todayXp").textContent=day.xp||0; qs("#streak").textContent=state.streak.current;qs("#questStreak").textContent=state.streak.current;
-  qs("#shieldCount").textContent=state.streak.shields;qs("#bestStreak").textContent=state.streak.best;
-  qs("#walletXp").textContent=availableXp();
-
-  const qHtml=defaultQuests.map(q=>questHtml(q,!!day.completed[q.id],()=>`toggleQuest('${q.id}')`)).join("");
-  qs("#questList").innerHTML=qHtml; qs("#homeQuestList").innerHTML=defaultQuests.slice(0,4).map(q=>questHtml(q,!!day.completed[q.id],()=>`toggleQuest('${q.id}')`)).join("");
-  qs("#dailyDoneCount").textContent=`${Object.values(day.completed||{}).filter(Boolean).length}/${defaultQuests.length}`;
-
-  qs("#specialQuestList").innerHTML=specialQuests.map(q=>questHtml(q,!!state.special[todayKey()][q.id],()=>`toggleSpecial('${q.id}')`)).join("");
-  qs("#weeklyQuestList").innerHTML=weeklyQuests.map(q=>{
-    const val=weeklyProgress(q),key=weekStartKey()+"_"+q.id,done=!!state.weeklyClaims[key], ready=val>=q.target;
-    return `<div class="quest-item ${done?"done":""}"><button class="quest-check" onclick="claimWeekly('${q.id}')">${done?"✓":ready?"!":""}</button>
-    <div class="quest-copy"><strong>${q.icon} ${q.name}</strong><small>${Math.min(val,q.target)} / ${q.target}${q.type==="minutes"?"분":"회"}</small></div><span class="xp-badge">+${q.xp} XP</span></div>`;
-  }).join("");
-
-  renderBoss(); renderStats(); renderRewards(); renderWorkoutLog(); drawCharts();
+ const dnum=dayNum(), set=questSets[(dnum-1)%7], ds=dayState(), lvl=level(), lx=s.xp.total%100;
+ setText("level",lvl);setText("charLevel",lvl);setText("title",title());setText("levelXp",lx+" / 100 XP");setText("totalXp",s.xp.total);setText("wallet",Math.max(0,s.xp.total-s.xp.spent));setText("shopXp",Math.max(0,s.xp.total-s.xp.spent));setText("shield",s.streak.shield);setText("streak",s.streak.current);document.getElementById("levelBar").style.width=lx+"%";
+ setText("dayBadge","DAY "+dnum);setText("dayTitle",set.title);setText("questDayTitle","DAY "+dnum+" · "+set.title.replace(/[🌱🦵🌿🧘🫀⚔️🐲!]/g,"").trim());setText("dayLine",set.line);
+ setText("weightNow",s.profile.currentWeight.toFixed(1));setText("weightGoal",s.profile.goalWeight.toFixed(1));setText("weightRemain",Math.abs(s.profile.currentWeight-s.profile.goalWeight).toFixed(1));
+ const p=Math.max(0,Math.min(100,Math.abs(s.profile.startWeight-s.profile.currentWeight)/Math.max(.1,Math.abs(s.profile.startWeight-s.profile.goalWeight))*100));document.getElementById("weightGoalBar").style.width=p+"%";
+ document.getElementById("questList").innerHTML=set.qs.map((q,i)=>`<div class="quest ${ds.done[i]?"done":""}"><button class="qcheck" onclick="completeQuest(${i})">${ds.done[i]?"✓":""}</button><div><b>${q[0]} ${q[1]}</b></div><span class="xp">+${q[2]} XP</span></div>`).join("");
+ const done=Object.values(ds.done).filter(Boolean).length;document.getElementById("questProgress").style.width=(done/set.qs.length*100)+"%";setText("questCount",done+" / "+set.qs.length+" · 3개 이상이면 DAY CLEAR!");
+ document.getElementById("dayClearBtn").disabled=ds.cleared;document.getElementById("dayClearBtn").textContent=ds.cleared?"DAY CLEAR 완료! 🎉":"DAY CLEAR 보상 받기 ✨";
+ document.getElementById("bossBar").style.width=(s.boss.hp/500*100)+"%";setText("bossHp",s.boss.hp);
+ renderStats();renderMeasures();renderRewards();save()
 }
-function questHtml(q,done,onClickFactory){
-  return `<div class="quest-item ${done?"done":""}"><button class="quest-check" onclick="${onClickFactory()}">${done?"✓":""}</button>
-  <div class="quest-copy"><strong>${q.icon} ${q.name}</strong><small>${statMeta[q.stat]?.name||"습관"} 성장</small></div><span class="xp-badge">+${q.xp} XP</span></div>`;
+function completeQuest(i){
+ const ds=dayState(), set=questSets[(dayNum()-1)%7];if(ds.done[i])return;ds.done[i]=true;const q=set.qs[i];s.xp.total+=q[2];s.stats[q[3]]=(s.stats[q[3]]||0)+Math.round(q[2]*.6);s.boss.hp=Math.max(0,s.boss.hp-q[2]);toast("+"+q[2]+" XP · 퀘스트 완료!");spark();render()
 }
-function renderBoss(){
-  const b=state.boss,pct=b.hp/b.maxHp*100;
-  const html=`<div class="boss-title"><div><span class="label">TODAY'S BOSS</span><h3>${b.icon} “${b.name}”</h3><small>${b.defeated?"처치 완료! 오늘의 승리 🏆":"운동을 기록하고 공격하세요"}</small></div><div class="boss-icon">${b.defeated?"🏆":"🐲"}</div></div>
-  <div class="boss-hp"><div class="boss-hp-fill" style="width:${pct}%"></div></div><small>HP ${b.hp} / ${b.maxHp}</small>
-  <button class="primary-btn" onclick="bossAttack()" ${b.defeated?"disabled":""}>${b.defeated?"보스 처치 완료":"⚔️ 공격하기"}</button>`;
-  qs("#bossCard").innerHTML=html; qs("#bossHome").innerHTML=html;
-}
-function renderStats(){
-  qs("#statCards").innerHTML=Object.entries(statMeta).map(([k,m])=>{
-    const xp=state.stats[k]||0, level=Math.floor(xp/100)+1,pct=xp%100;
-    return `<div class="stat-card"><div class="stat-top"><span class="stat-icon">${m.icon}</span><strong>Lv.${level}</strong></div><h3>${m.name}</h3><small>${pct} / 100</small><div class="stat-bar"><div class="stat-fill" style="width:${pct}%"></div></div></div>`;
-  }).join("");
-}
-function renderRewards(){
-  qs("#rewardList").innerHTML=state.rewards.sort((a,b)=>a.cost-b.cost).map(r=>`<div class="reward-item">
-    <div class="reward-emoji">${r.emoji}</div><div class="reward-copy"><strong>${r.name}</strong><small>${r.cost} XP</small></div>
-    <div class="reward-actions"><button class="mini-btn redeem-btn" onclick="rewardRedeem('${r.id}')">교환</button><button class="mini-btn edit-btn" onclick="rewardEdit('${r.id}')">수정</button></div></div>`).join("");
-}
-function renderWorkoutLog(){
-  const arr=state.workouts.slice(0,8);
-  qs("#workoutLog").innerHTML=arr.length?arr.map(w=>`<div class="log-item"><div><strong>${statMeta[w.stat]?.icon||"🏃"} ${w.name}</strong><small>${fmtDate(w.date)} · ${w.minutes}분 · ${statMeta[w.stat]?.name||""}</small></div><strong>+${w.xp} XP</strong></div>`).join(""):`<p class="muted">아직 운동 기록이 없어요. 첫 기록을 남겨보세요!</p>`;
-}
-function drawCharts(){
-  drawLineChart(qs("#weightChart"),state.weights.slice(-14).map(x=>({label:fmtDate(x.date),value:x.value})),true);
-  const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=d.toISOString().slice(0,10);days.push({label:fmtDate(k),value:state.daily[k]?.xp||0})}
-  drawBarChart(qs("#xpChart"),days);
-  if(state.weights.length>=2){
-    const first=state.weights[Math.max(0,state.weights.length-7)].value,last=state.weights.at(-1).value,d=last-first;
-    qs("#weightTrend").textContent=`최근 ${d>0?"+":""}${d.toFixed(1)}kg`;
-  }
-}
-function drawLineChart(canvas,data,weight=false){
-  const c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);
-  c.strokeStyle="#ECEAF3";c.lineWidth=2;for(let i=1;i<4;i++){let y=h*i/4;c.beginPath();c.moveTo(45,y);c.lineTo(w-15,y);c.stroke()}
-  if(data.length===0)return;
-  const vals=data.map(d=>d.value),min=Math.min(...vals),max=Math.max(...vals),range=Math.max(.6,max-min);
-  const x=i=>45+(w-70)*(data.length===1?.5:i/(data.length-1)), y=v=>30+(h-70)*(1-(v-min)/range);
-  c.strokeStyle="#7C5CFC";c.lineWidth=6;c.lineCap="round";c.lineJoin="round";c.beginPath();data.forEach((d,i)=>i?c.lineTo(x(i),y(d.value)):c.moveTo(x(i),y(d.value)));c.stroke();
-  data.forEach((d,i)=>{c.fillStyle="#7C5CFC";c.beginPath();c.arc(x(i),y(d.value),7,0,Math.PI*2);c.fill()});
-  c.fillStyle="#8B8799";c.font="18px -apple-system";data.forEach((d,i)=>{if(i===0||i===data.length-1)c.fillText(d.label,x(i)-22,h-16)});
-}
-function drawBarChart(canvas,data){
-  const c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);const max=Math.max(50,...data.map(d=>d.value)),bw=(w-70)/data.length;
-  data.forEach((d,i)=>{const bh=(h-65)*d.value/max,x=45+i*bw+8,y=h-38-bh;c.fillStyle="#9A84FF";roundRect(c,x,y,bw-16,bh,10);c.fill();c.fillStyle="#8B8799";c.font="16px -apple-system";c.fillText(d.label,x-3,h-13)});
-}
-function roundRect(ctx,x,y,w,h,r){if(h<0)h=0;r=Math.min(r,w/2,h/2||r);ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):ctx.rect(x,y,w,h)}
-function qs(s){return document.querySelector(s)}
-function toast(msg){const t=qs("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2200)}
-function confetti(){const layer=qs("#confetti"),bits=["✨","⭐","💜","🎉","🌿"];for(let i=0;i<30;i++){const e=document.createElement("span");e.className="confetti";e.textContent=bits[i%bits.length];e.style.left=Math.random()*100+"%";e.style.animationDelay=Math.random()*.3+"s";layer.appendChild(e);setTimeout(()=>e.remove(),1800)}}
-function burstAtCenter(icon){toast(`${icon} 퀘스트 완료!`)}
-function celebrateLevel(){qs("#levelBurst").classList.add("show");setTimeout(()=>qs("#levelBurst").classList.remove("show"),1000);confetti()}
-
-document.querySelectorAll(".nav-item").forEach(btn=>btn.addEventListener("click",()=>navigate(btn.dataset.target)));
-document.querySelectorAll("[data-nav]").forEach(btn=>btn.addEventListener("click",()=>navigate(btn.dataset.nav)));
-function navigate(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.target===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="progress")setTimeout(drawCharts,50)}
-qs("#weightCard").onclick=()=>{qs("#weightInput").value=state.profile.currentWeight;qs("#weightDialog").showModal()};
-qs("#saveWeightBtn").onclick=e=>{e.preventDefault();saveWeight(qs("#weightInput").value);qs("#weightDialog").close()};
-qs("#addWorkoutBtn").onclick=()=>qs("#workoutDialog").showModal();
-qs("#saveWorkoutBtn").onclick=e=>{e.preventDefault();const n=qs("#workoutName").value.trim(),m=+qs("#workoutMinutes").value;if(!n||!m)return;addWorkout(n,qs("#workoutStat").value,m);qs("#workoutDialog").close();qs("#workoutName").value=""};
-qs("#addRewardBtn").onclick=()=>rewardEdit(null);
-qs("#saveRewardBtn").onclick=e=>{e.preventDefault();saveReward();qs("#rewardDialog").close()};
-qs("#restDayBtn").onclick=markRestDay;
-qs("#settingsBtn").onclick=()=>{qs("#startWeightInput").value=state.profile.startWeight;qs("#targetWeightInput").value=state.profile.targetWeight;qs("#settingsDialog").showModal()};
-qs("#saveSettingsBtn").onclick=e=>{e.preventDefault();state.profile.startWeight=+qs("#startWeightInput").value||state.profile.startWeight;state.profile.targetWeight=+qs("#targetWeightInput").value||state.profile.targetWeight;save();render();qs("#settingsDialog").close();toast("설정을 저장했어요.")};
-
-ensureToday();save();render();
-
-
+document.getElementById("dayClearBtn").onclick=()=>{const ds=dayState(),done=Object.values(ds.done).filter(Boolean).length;if(done<3)return toast("퀘스트 3개 이상이면 클리어 가능!");if(ds.cleared)return;ds.cleared=true;s.xp.total+=30;const y=new Date();y.setDate(y.getDate()-1);const yk=y.toISOString().slice(0,10);if(!s.streak.last||s.streak.last===yk)s.streak.current++;else if(s.streak.shield>0){s.streak.shield--;s.streak.current++}else s.streak.current=1;s.streak.last=today();s.streak.best=Math.max(s.streak.best,s.streak.current);toast("DAY CLEAR! +30 XP 🎉");spark();render()}
+function bossAttack(){const dmg=Math.min(80,20+Math.floor((s.xp.total%100)/2));s.boss.hp=Math.max(0,s.boss.hp-dmg);toast("보스에게 "+dmg+" 데미지! ⚔️");if(s.boss.hp===0){s.xp.total+=150;toast("보스 처치! +150 XP 🏆");s.boss.hp=500}spark();render()}
+function renderStats(){document.getElementById("statGrid").innerHTML=Object.entries(statNames).map(([k,n])=>{const v=s.stats[k]||0,l=Math.floor(v/100)+1,p=v%100;return `<div class="statcard"><b>${n}</b><div style="font-size:22px;font-weight:1000;margin:6px 0">Lv.${l}</div><div class="bar"><div class="fill" style="width:${p}%"></div></div><div class="muted">${p}/100</div></div>`}).join("")}
+const measures=[["neck","목 둘레"],["chest","가슴 둘레"],["waist","허리 둘레"],["belly","복부(배꼽) 둘레"],["hip","엉덩이 둘레"],["thighL","허벅지 왼쪽"],["thighR","허벅지 오른쪽"]];
+function renderMeasures(){const m=s.measures[today()]||{};document.getElementById("measureRows").innerHTML=measures.map(([k,n])=>`<div class="measure-row"><div><b>${n}</b></div><input id="m_${k}" type="number" step="0.1" value="${m[k]??""}" placeholder="0.0"></div>`).join("")}
+function saveMeasures(){const rec={};measures.forEach(([k])=>{const v=parseFloat(document.getElementById("m_"+k).value);if(!isNaN(v))rec[k]=v});s.measures[today()]=rec;save();toast("둘레 기록 완료 📏")}
+function openWeight(){document.getElementById("weightInput").value=s.profile.currentWeight;document.getElementById("weightModal").showModal()}
+document.getElementById("saveWeight").onclick=e=>{e.preventDefault();const v=parseFloat(document.getElementById("weightInput").value);if(isNaN(v))return;s.profile.currentWeight=v;const f=s.weights.find(x=>x.date===today());if(f)f.value=v;else s.weights.push({date:today(),value:v});save();document.getElementById("weightModal").close();toast("체중 기록 완료! 숫자는 평가하지 않아요.");render()}
+function drawWeight(){const c=document.getElementById("weightChart"),ctx=c.getContext("2d"),data=s.weights.slice(-14),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);ctx.strokeStyle="#eadfce";ctx.lineWidth=1;for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(35,h*i/4);ctx.lineTo(w-10,h*i/4);ctx.stroke()}if(!data.length)return;const vals=data.map(x=>x.value),mi=Math.min(...vals),ma=Math.max(...vals),r=Math.max(.5,ma-mi);const X=i=>35+(w-55)*(data.length===1?.5:i/(data.length-1)),Y=v=>25+(h-50)*(1-(v-mi)/r);ctx.strokeStyle="#5da447";ctx.lineWidth=5;ctx.beginPath();data.forEach((d,i)=>i?ctx.lineTo(X(i),Y(d.value)):ctx.moveTo(X(i),Y(d.value)));ctx.stroke();data.forEach((d,i)=>{ctx.fillStyle="#5da447";ctx.beginPath();ctx.arc(X(i),Y(d.value),5,0,Math.PI*2);ctx.fill()})}
+function renderRewards(){document.getElementById("rewardList").innerHTML=s.rewards.map(r=>`<div class="reward"><div class="emoji">${r.emoji}</div><div><b>${r.name}</b><div class="muted">${r.cost} XP</div></div><button class="btn ghost" style="width:auto;padding:9px 12px" onclick="redeem('${r.id}')">교환</button></div>`).join("")}
+function redeem(id){const r=s.rewards.find(x=>x.id===id),avail=s.xp.total-s.xp.spent;if(avail<r.cost)return toast("XP가 조금 더 필요해!");s.xp.spent+=r.cost;save();toast(r.emoji+" "+r.name+" 획득!");spark();render()}
+function openReward(){document.getElementById("rewardModal").showModal()}
+document.getElementById("saveReward").onclick=e=>{e.preventDefault();const n=document.getElementById("rewardName").value.trim(),c=parseInt(document.getElementById("rewardCost").value),em=document.getElementById("rewardEmoji").value||"🎁";if(!n||!c)return;s.rewards.push({id:"r"+Date.now(),name:n,cost:c,emoji:em});save();document.getElementById("rewardModal").close();render();toast("보상 추가 완료!")}
+document.getElementById("settingsBtn").onclick=()=>{document.getElementById("startWeightInput").value=s.profile.startWeight;document.getElementById("goalWeightInput").value=s.profile.goalWeight;document.getElementById("settingsModal").showModal()}
+document.getElementById("saveSettings").onclick=e=>{e.preventDefault();s.profile.startWeight=parseFloat(document.getElementById("startWeightInput").value)||s.profile.startWeight;s.profile.goalWeight=parseFloat(document.getElementById("goalWeightInput").value)||s.profile.goalWeight;save();document.getElementById("settingsModal").close();render();toast("설정 저장 완료")}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove("show"),1800)}
+function spark(){const l=document.getElementById("spark"),a=["✨","⭐","🌿","💛"];for(let i=0;i<22;i++){const e=document.createElement("i");e.textContent=a[i%a.length];e.style.left=Math.random()*100+"%";e.style.animationDelay=Math.random()*.25+"s";l.appendChild(e);setTimeout(()=>e.remove(),1700)}}
+render();
 </script>
 </body>
 </html>
