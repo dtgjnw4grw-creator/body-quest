@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#7C5CFC" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="BODY QUEST" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>BODY QUEST</title>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">MY HEALTH RPG</p>
+        <h1>BODY QUEST</h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" aria-label="설정">⚙️</button>
+    </header>
+
+    <main>
+      <section id="home" class="screen active">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <div class="level-pill">Lv.<span id="heroLevel">1</span> · <span id="heroTitle">BODY BEGINNER</span></div>
+            <h2 id="greeting">오늘도 한 칸만 전진!</h2>
+            <p>몸무게가 아니라, 오늘의 좋은 선택이 캐릭터를 키워요.</p>
+            <div class="xp-track">
+              <div id="levelXpBar" class="xp-fill"></div>
+            </div>
+            <div class="xp-row"><span id="levelXpText">0 / 100 XP</span><strong id="totalXpText">총 0 XP</strong></div>
+          </div>
+          <div class="avatar-wrap">
+            <div id="avatar" class="avatar">🌱</div>
+            <div id="levelBurst" class="level-burst">LEVEL UP!</div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <button class="metric-card editable" id="weightCard">
+            <span>현재 체중</span><strong><span id="currentWeight">59.2</span> kg</strong><small>눌러서 기록</small>
+          </button>
+          <div class="metric-card">
+            <span>목표 체중</span><strong><span id="targetWeight">49.0</span> kg</strong><small id="remainingWeight">목표까지 10.2kg</small>
+          </div>
+        </div>
+
+        <div class="card progress-card">
+          <div class="card-head">
+            <div><span class="label">GOAL JOURNEY</span><h3>목표 여정</h3></div>
+            <strong id="goalPercent">0%</strong>
+          </div>
+          <div class="progress-track"><div id="goalBar" class="progress-fill"></div></div>
+          <p class="muted">하루 체중은 수분·식사 등에 따라 흔들릴 수 있어요. 성공/실패 판정에는 사용하지 않아요.</p>
+        </div>
+
+        <div class="grid three mini-metrics">
+          <div class="metric-card"><span>오늘 XP</span><strong id="todayXp">0</strong></div>
+          <div class="metric-card"><span>연속 달성</span><strong>🔥 <span id="streak">0</span>일</strong></div>
+          <div class="metric-card"><span>회복권</span><strong>🛡️ <span id="shieldCount">1</span></strong></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><span class="label">TODAY'S QUEST</span><h3>오늘의 퀘스트</h3></div>
+            <button class="text-btn" data-nav="quest">전체보기</button>
+          </div>
+          <div id="homeQuestList" class="quest-list"></div>
+        </div>
+
+        <div id="bossHome" class="boss-card"></div>
+      </section>
+
+      <section id="quest" class="screen">
+        <div class="section-title">
+          <div><span class="label">QUEST BOARD</span><h2>오늘의 모험</h2></div>
+          <div class="streak-chip">🔥 <span id="questStreak">0</span>일</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>오늘의 퀘스트</h3><span id="dailyDoneCount" class="soft-chip">0/0</span>
+          </div>
+          <div id="questList" class="quest-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>주간 퀘스트</h3><span class="soft-chip">BONUS</span></div>
+          <div id="weeklyQuestList" class="quest-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>특별 퀘스트</h3><span class="soft-chip">OPTIONAL</span></div>
+          <div id="specialQuestList" class="quest-list"></div>
+        </div>
+
+        <div id="bossCard" class="boss-card"></div>
+
+        <button id="restDayBtn" class="secondary-btn">🌙 오늘은 회복 데이로 기록하기</button>
+      </section>
+
+      <section id="stats" class="screen">
+        <div class="section-title"><div><span class="label">CHARACTER STATS</span><h2>나의 능력치</h2></div></div>
+        <div id="statCards" class="stats-grid"></div>
+        <div class="card">
+          <span class="label">HOW IT WORKS</span>
+          <h3>운동하면 스탯도 함께 성장해요</h3>
+          <p class="muted">예: 레그프레스 → 하체, 푸시업 → 상체, 플랭크 → 코어, 러닝 → 체력. 식사와 수면 습관도 각각 식습관·회복 스탯을 올립니다.</p>
+        </div>
+      </section>
+
+      <section id="progress" class="screen">
+        <div class="section-title"><div><span class="label">PROGRESS</span><h2>성장 기록</h2></div></div>
+        <div class="card">
+          <div class="card-head"><h3>체중 흐름</h3><span id="weightTrend" class="soft-chip">기록 시작</span></div>
+          <canvas id="weightChart" width="720" height="320"></canvas>
+          <p class="muted">점 하나보다 7일 이상의 흐름을 보는 용도예요.</p>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>최근 XP</h3><span class="soft-chip">7 DAYS</span></div>
+          <canvas id="xpChart" width="720" height="300"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>최근 운동 기록</h3><button id="addWorkoutBtn" class="text-btn">+ 운동 추가</button></div>
+          <div id="workoutLog" class="log-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>연속 달성 기록</h3><span class="soft-chip">🔥 BEST <span id="bestStreak">0</span></span></div>
+          <p class="muted">하루를 놓쳐도 회복권이 있으면 연속 기록을 보호할 수 있어요. 회복 데이는 실패가 아니라 훈련의 일부로 기록됩니다.</p>
+        </div>
+      </section>
+
+      <section id="reward" class="screen">
+        <div class="section-title"><div><span class="label">REWARD SHOP</span><h2>나를 위한 보상</h2></div><div class="xp-wallet">✨ <span id="walletXp">0</span> XP</div></div>
+        <div id="rewardList" class="reward-list"></div>
+        <button id="addRewardBtn" class="primary-btn">+ 새 보상 추가</button>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-target="home"><span>🏠</span><small>HOME</small></button>
+      <button class="nav-item" data-target="quest"><span>⚔️</span><small>QUEST</small></button>
+      <button class="nav-item" data-target="stats"><span>💪</span><small>STATS</small></button>
+      <button class="nav-item" data-target="progress"><span>📈</span><small>PROGRESS</small></button>
+      <button class="nav-item" data-target="reward"><span>🎁</span><small>REWARD</small></button>
+    </nav>
+  </div>
+
+  <dialog id="weightDialog" class="modal">
+    <form method="dialog">
+      <h3>오늘 체중 기록</h3>
+      <p class="muted">숫자는 평가가 아니라 관찰용 데이터예요.</p>
+      <label>체중 (kg)<input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" required /></label>
+      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveWeightBtn" value="default" class="primary-btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="workoutDialog" class="modal">
+    <form method="dialog">
+      <h3>운동 기록 추가</h3>
+      <label>운동 이름<input id="workoutName" placeholder="예: 레그프레스" required /></label>
+      <label>분류
+        <select id="workoutStat">
+          <option value="lower">🦵 하체</option><option value="upper">💪 상체</option>
+          <option value="core">🧘 코어</option><option value="stamina">🫀 체력</option>
+        </select>
+      </label>
+      <label>운동 시간 (분)<input id="workoutMinutes" type="number" inputmode="numeric" min="1" max="300" value="30" required /></label>
+      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveWorkoutBtn" value="default" class="primary-btn">저장 + XP</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="rewardDialog" class="modal">
+    <form method="dialog">
+      <h3 id="rewardDialogTitle">새 보상 추가</h3>
+      <input id="rewardEditId" type="hidden" />
+      <label>보상 이름<input id="rewardName" placeholder="예: 뜨개실" required /></label>
+      <label>필요 XP<input id="rewardCost" type="number" inputmode="numeric" min="10" step="10" value="100" required /></label>
+      <label>아이콘<input id="rewardEmoji" value="🎁" maxlength="4" /></label>
+      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveRewardBtn" value="default" class="primary-btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="modal">
+    <form method="dialog">
+      <h3>BODY QUEST 설정</h3>
+      <label>시작 체중 (kg)<input id="startWeightInput" type="number" step="0.1" /></label>
+      <label>목표 체중 (kg)<input id="targetWeightInput" type="number" step="0.1" /></label>
+      <p class="muted">목표 날짜는 일부러 넣지 않았어요. 속도보다 지속 가능한 습관을 우선합니다.</p>
+      <div class="modal-actions"><button value="cancel" class="secondary-btn">취소</button><button id="saveSettingsBtn" value="default" class="primary-btn">저장</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
