@@ -103,10 +103,26 @@ h2,h3,p{margin-top:0}.hero h2{font-size:24px;margin-bottom:7px}
     <button class="btn green" style="margin-top:12px" onclick="navTo('quest')">오늘의 퀘스트 보기 ›</button>
   </div>
 
+
+  <div class="card" id="journeyCard">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+      <div>
+        <span class="badge">🐹 ADAPTIVE JOURNEY</span>
+        <div style="font-size:20px;font-weight:1000;margin-top:8px"><span id="journeyFrom">59.0</span> → <span id="journeyTo">53.0</span>kg 모험</div>
+      </div>
+      <span class="badge" id="journeyPhase">적응기</span>
+    </div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="mini">예상 기간<b id="journeyWeeks">약 12~20주</b></div>
+      <div class="mini">예상 도착<b id="journeyEta">계산 중</b></div>
+    </div>
+    <div class="muted" id="journeyReason" style="margin-top:10px">처음에는 완만한 감량 범위로 계산하고, 공복체중 기록이 쌓이면 실제 추세로 자동 보정해요.</div>
+  </div>
+
   <div class="card">
     <div style="font-weight:900;margin-bottom:10px">오늘의 한마디</div>
     <div style="display:grid;grid-template-columns:1fr 100px;align-items:center">
-      <div id="dailyMessage" style="font-size:16px;font-weight:900;line-height:1.6">작은 선택이<br>내일의 나를 만든다!</div>
+      <div><div id="dailyMessage" style="font-size:16px;font-weight:900;line-height:1.6">작은 선택이<br>내일의 나를 만든다!</div><div class="muted" id="dailyCoach" style="margin-top:8px">오늘 기록을 바탕으로 햄지가 퀘스트를 조정해요.</div></div>
       <svg class="hamster small" viewBox="0 0 180 180"><circle cx="54" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><circle cx="130" cy="49" r="17" fill="#ffd9c8" stroke="#3a3029" stroke-width="4"/><path d="M39 65 C40 30 143 27 148 72 C153 109 143 146 93 151 C44 149 28 118 39 65Z" fill="#fff9f0" stroke="#3a3029" stroke-width="4"/><ellipse cx="56" cy="94" rx="13" ry="8" fill="#f5b8ac"/><ellipse cx="127" cy="94" rx="13" ry="8" fill="#f5b8ac"/><circle cx="68" cy="81" r="5.5"/><circle cx="116" cy="81" r="5.5"/><path d="M88 91 Q92 95 96 91 M92 93 Q92 105 82 105 M92 93 Q92 105 102 105" fill="none" stroke="#25201c" stroke-width="3" stroke-linecap="round"/></svg>
     </div>
   </div>
@@ -131,6 +147,17 @@ h2,h3,p{margin-top:0}.hero h2{font-size:24px;margin-bottom:7px}
     <div style="margin-top:12px"><b>퀘스트 진행도</b><div class="bar" style="margin-top:7px"><div class="fill" id="questProgress"></div></div><div class="muted" id="questCount" style="margin-top:5px"></div></div>
     <button class="btn green" id="dayClearBtn" style="margin-top:12px">DAY CLEAR 보상 받기 ✨</button>
   </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div><b>오늘의 운동 목표</b><div class="muted" id="workoutPlanWhy">최근 기록을 기반으로 자동 설정</div></div>
+      <button class="badge" style="border:0" onclick="openWorkoutEdit()">✏️ 수정</button>
+    </div>
+    <div style="font-size:19px;font-weight:1000;margin:12px 0 5px" id="workoutPlanTitle">가볍게 움직이기</div>
+    <div class="muted" id="workoutPlanDetail">20분 · 무리하지 않는 강도</div>
+    <button class="btn green" style="margin-top:12px" id="workoutDoneBtn" onclick="completeWorkout()">운동 완료 +30 XP 💪</button>
+  </div>
+
   <div class="card boss">
     <div class="bossname">WEEK 1 · 보스전</div>
     <div class="bossmonster">😾</div>
@@ -187,6 +214,20 @@ h2,h3,p{margin-top:0}.hero h2{font-size:24px;margin-bottom:7px}
 <dialog id="weightModal" class="modal"><form method="dialog"><h3>오늘 체중 기록</h3><label>체중 (kg)<input id="weightInput" type="number" step="0.1"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveWeight" value="default">저장</button></div></form></dialog>
 <dialog id="rewardModal" class="modal"><form method="dialog"><h3>새 보상 추가</h3><label>보상 이름<input id="rewardName"></label><label>필요 XP<input id="rewardCost" type="number" value="100"></label><label>아이콘<input id="rewardEmoji" value="🎁"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveReward" value="default">저장</button></div></form></dialog>
 <dialog id="settingsModal" class="modal"><form method="dialog"><h3>설정</h3><label>시작 체중<input id="startWeightInput" type="number" step="0.1"></label><label>목표 체중<input id="goalWeightInput" type="number" step="0.1"></label><div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveSettings" value="default">저장</button></div></form></dialog>
+
+<dialog id="workoutModal" class="modal"><form method="dialog">
+  <h3>오늘 운동 수정</h3>
+  <div class="muted">자동 추천이 마음에 안 들면 내 컨디션에 맞게 바꿔도 돼요.</div>
+  <label>운동 이름<input id="workoutNameInput" placeholder="예: 하체 근력 + 걷기"></label>
+  <label>운동 시간(분)<input id="workoutMinutesInput" type="number" min="5" max="180" step="5"></label>
+  <label>오늘 강도
+    <select id="workoutIntensityInput" style="width:100%;padding:12px;border:1px solid #ddd0bf;border-radius:12px;margin-top:6px;background:#fff">
+      <option value="easy">가볍게</option><option value="moderate">보통</option><option value="hard">조금 힘들게</option>
+    </select>
+  </label>
+  <div class="actions"><button class="btn ghost" value="cancel">취소</button><button class="btn green" id="saveWorkoutEdit" value="default">저장</button></div>
+</form></dialog>
+
 <div class="toast" id="toast"></div><div class="spark" id="spark"></div>
 
 <script>
@@ -204,10 +245,14 @@ const questSets=[
 ];
 const statNames={lower:"🦵 하체",upper:"💪 상체",core:"🧘 코어",stamina:"🫀 체력",nutrition:"🥗 식습관",recovery:"😴 회복"};
 function initial(){
- const t=today(); return {startDate:t,profile:{startWeight:59.2,goalWeight:49,currentWeight:59.2},xp:{total:0,spent:0},streak:{current:0,best:0,shield:1,last:null},stats:{lower:0,upper:0,core:0,stamina:0,nutrition:0,recovery:0},days:{},weights:[{date:t,value:59.2}],measures:{},boss:{hp:500},rewards:[["☕","카페 음료",100],["🧶","뜨개실",300],["👟","운동복",500],["🍽️","맛있는 외식",800],["✨","사고 싶었던 물건",1500]].map((x,i)=>({id:"r"+i,emoji:x[0],name:x[1],cost:x[2]}))}
+ const t=today(); return {startDate:t,profile:{startWeight:59.2,goalWeight:49,currentWeight:59.2},xp:{total:0,spent:0},streak:{current:0,best:0,shield:1,last:null},stats:{lower:0,upper:0,core:0,stamina:0,nutrition:0,recovery:0},days:{},weights:[{date:t,value:59.2}],measures:{},workouts:{},boss:{hp:500},rewards:[["☕","카페 음료",100],["🧶","뜨개실",300],["👟","운동복",500],["🍽️","맛있는 외식",800],["✨","사고 싶었던 물건",1500]].map((x,i)=>({id:"r"+i,emoji:x[0],name:x[1],cost:x[2]}))}
 }
 let s=(()=>{try{return Object.assign(initial(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return initial()}})();
 function save(){localStorage.setItem(KEY,JSON.stringify(s))}
+
+// V3 migration: only update the untouched old default goal (49kg) to the new 53kg campaign.
+if(Math.abs((s.profile?.goalWeight??49)-49)<0.001){s.profile.goalWeight=53;}
+
 function dayNum(){return Math.max(1,dayDiff(s.startDate,today())+1)}
 function dayState(){const k=today(); if(!s.days[k]) s.days[k]={done:{},cleared:false}; return s.days[k]}
 function level(){return Math.floor(s.xp.total/100)+1}
@@ -215,10 +260,95 @@ function title(){const l=level(); return l>=20?"BODY MASTER":l>=10?"BODY BUILDER
 function setText(id,v){document.getElementById(id).textContent=v}
 function navTo(id){document.querySelectorAll(".screen").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.nav===id));window.scrollTo(0,0);if(id==="progress")drawWeight()}
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>navTo(b.dataset.nav))
+
+const quotes=[
+ "완벽한 하루보다 다시 돌아오는 하루가 더 강해.",
+ "오늘 한 번의 선택이 내일의 몸을 만든다.",
+ "속도보다 방향. 햄지는 오늘도 앞으로 간다.",
+ "잘 쉬는 것도 훈련의 일부야.",
+ "작은 반복이 결국 큰 변화를 만든다.",
+ "어제보다 1%만 더 나를 챙기자.",
+ "몸무게 한 숫자보다 쌓인 습관이 더 중요해.",
+ "오늘의 운동은 미래의 나에게 보내는 선물.",
+ "천천히 가도 멈추지만 않으면 된다.",
+ "잘 먹고, 잘 움직이고, 잘 쉬는 게 진짜 성장."
+];
+function isoAdd(dateStr,days){const d=new Date(dateStr+"T12:00:00");d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function dateLabel(k){const d=new Date(k+"T12:00:00");return `${d.getMonth()+1}/${d.getDate()}`}
+function recentWeights(n=14){return [...s.weights].sort((a,b)=>a.date.localeCompare(b.date)).slice(-n)}
+function avg(arr){return arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:null}
+function trendPerWeek(){
+ const a=recentWeights(21); if(a.length<4)return null;
+ const first=a.slice(0,Math.min(3,a.length)).map(x=>x.value);
+ const last=a.slice(-Math.min(3,a.length)).map(x=>x.value);
+ const days=Math.max(1,dayDiff(a[0].date,a[a.length-1].date));
+ return (avg(last)-avg(first))*7/days;
+}
+function journeyInfo(){
+ const current=s.profile.currentWeight, goal=s.profile.goalWeight, remain=Math.max(0,current-goal);
+ const recordedTrend=trendPerWeek();
+ // Conservative app-planning range: 0.3–0.5 kg/week; never promise an exact date.
+ let slow=.30, fast=.50;
+ let center=.40;
+ if(recordedTrend!==null && recordedTrend<-.12){
+   center=Math.min(.55,Math.max(.20,-recordedTrend));
+   slow=Math.max(.20,center-.10); fast=Math.min(.60,center+.10);
+ }
+ const minWeeks=remain===0?0:Math.ceil(remain/fast);
+ const maxWeeks=remain===0?0:Math.ceil(remain/slow);
+ const midDays=Math.round((minWeeks+maxWeeks)/2*7);
+ const eta=remain===0?"목표 도착 🎉":dateLabel(isoAdd(today(),midDays))+" 전후";
+ const week=Math.floor((dayNum()-1)/7)+1;
+ const phase=week<=2?"적응기":week<=6?"기초 체력기":week<=12?"성장기":"꾸준함 챕터";
+ return {minWeeks,maxWeeks,eta,phase,trend:recordedTrend};
+}
+function adaptiveWorkout(){
+ const dnum=dayNum(), ds=dayState(), wi=journeyInfo();
+ const last7=Object.entries(s.days).filter(([k])=>dayDiff(k,today())>=0 && dayDiff(k,today())<=6);
+ const clears=last7.filter(([,v])=>v.cleared).length;
+ const weightTrend=wi.trend;
+ let mins=dnum<=7?20:dnum<=21?25:30;
+ let name=["전신 가볍게 + 걷기","하체 근력 + 가벼운 걷기","회복 산책 + 스트레칭","상체 근력 + 걷기","코어 + 유산소","자유 근력운동 + 걷기","회복 전신 스트레칭"][(dnum-1)%7];
+ let intensity="moderate", why="DAY "+dnum+" 기본 성장 루트";
+ if(clears<=2 && dnum>7){mins=Math.max(15,mins-10);intensity="easy";why="최근 달성률을 보고 부담을 낮췄어요";}
+ else if(clears>=5 && dnum>14){mins=Math.min(45,mins+5);why="최근 퀘스트를 잘 이어가서 5분만 성장!";}
+ if(weightTrend!==null && weightTrend>0.25){intensity="easy";why="체중은 흔들릴 수 있어요. 벌점 대신 회복·지속성 중심으로 조정했어요.";}
+ if(weightTrend!==null && weightTrend<-.7){mins=Math.max(15,mins-10);intensity="easy";why="최근 체중 변화가 빨라 보여 운동 강도를 올리지 않고 회복을 우선해요.";}
+ const saved=s.workouts[today()];
+ return saved?{...saved,why:"내가 직접 수정한 오늘의 운동"}:{name,minutes:mins,intensity,why,done:false};
+}
+function adaptiveCoach(){
+ const wi=journeyInfo(), tw=recentWeights(2), latest=tw.at(-1)?.value, prev=tw.length>1?tw.at(-2)?.value:null;
+ let line="첫 기록부터 천천히 패턴을 만들어보자!";
+ if(prev!=null){
+   const diff=latest-prev;
+   if(diff>0.4) line="어제보다 숫자가 올라도 괜찮아. 오늘은 수분·수면·가벼운 움직임에 집중!";
+   else if(diff<-0.5) line="숫자가 크게 내려간 날도 과하게 밀어붙이지 말고 평소 루틴 유지!";
+   else line="하루 숫자보다 최근 흐름을 보는 중이야. 오늘도 루틴만 이어가자!";
+ }
+ if(wi.trend!==null){
+   if(wi.trend>-0.15 && wi.trend<0.15) line="최근 추세는 거의 유지 중. 식사를 굶지 말고 활동과 단백질 루틴부터 점검!";
+   else if(wi.trend<=-.7) line="최근 하락 속도가 빠른 편이라 오늘은 회복과 충분한 식사를 우선!";
+   else if(wi.trend<-.15) line="최근 흐름은 천천히 내려가는 중. 지금 페이스를 무리 없이 유지!";
+ }
+ return line;
+}
+
 function render(){
  const dnum=dayNum(), set=questSets[(dnum-1)%7], ds=dayState(), lvl=level(), lx=s.xp.total%100;
  setText("level",lvl);setText("charLevel",lvl);setText("title",title());setText("levelXp",lx+" / 100 XP");setText("totalXp",s.xp.total);setText("wallet",Math.max(0,s.xp.total-s.xp.spent));setText("shopXp",Math.max(0,s.xp.total-s.xp.spent));setText("shield",s.streak.shield);setText("streak",s.streak.current);document.getElementById("levelBar").style.width=lx+"%";
  setText("dayBadge","DAY "+dnum);setText("dayTitle",set.title);setText("questDayTitle","DAY "+dnum+" · "+set.title.replace(/[🌱🦵🌿🧘🫀⚔️🐲!]/g,"").trim());setText("dayLine",set.line);
+
+ const ji=journeyInfo();
+ setText("journeyFrom",s.profile.currentWeight.toFixed(1)); setText("journeyTo",s.profile.goalWeight.toFixed(1));
+ setText("journeyWeeks",ji.minWeeks===0?"도착!":`약 ${ji.minWeeks}~${ji.maxWeeks}주`);
+ setText("journeyEta",ji.eta); setText("journeyPhase",ji.phase);
+ setText("journeyReason",ji.trend===null?"처음에는 완만한 범위로 계산하고, 공복체중 기록이 4회 이상 쌓이면 실제 추세로 자동 보정해요.":`최근 기록 추세 약 ${ji.trend.toFixed(2)}kg/주를 참고해 예상 범위를 보정했어요.`);
+ const qIndex=(dayNum()-1)%quotes.length; document.getElementById("dailyMessage").innerHTML=quotes[qIndex].replace(" ","<br>");
+ setText("dailyCoach",adaptiveCoach());
+ const wp=adaptiveWorkout(); setText("workoutPlanTitle",wp.name);setText("workoutPlanDetail",`${wp.minutes}분 · ${wp.intensity==="easy"?"가볍게":wp.intensity==="hard"?"조금 힘들게":"보통 강도"}`);setText("workoutPlanWhy",wp.why);
+ const wb=document.getElementById("workoutDoneBtn");wb.disabled=!!wp.done;wb.textContent=wp.done?"오늘 운동 완료! ✅":"운동 완료 +30 XP 💪";
+
  setText("weightNow",s.profile.currentWeight.toFixed(1));setText("weightGoal",s.profile.goalWeight.toFixed(1));setText("weightRemain",Math.abs(s.profile.currentWeight-s.profile.goalWeight).toFixed(1));
  const p=Math.max(0,Math.min(100,Math.abs(s.profile.startWeight-s.profile.currentWeight)/Math.max(.1,Math.abs(s.profile.startWeight-s.profile.goalWeight))*100));document.getElementById("weightGoalBar").style.width=p+"%";
  document.getElementById("questList").innerHTML=set.qs.map((q,i)=>`<div class="quest ${ds.done[i]?"done":""}"><button class="qcheck" onclick="completeQuest(${i})">${ds.done[i]?"✓":""}</button><div><b>${q[0]} ${q[1]}</b></div><span class="xp">+${q[2]} XP</span></div>`).join("");
@@ -232,6 +362,13 @@ function completeQuest(i){
 }
 document.getElementById("dayClearBtn").onclick=()=>{const ds=dayState(),done=Object.values(ds.done).filter(Boolean).length;if(done<3)return toast("퀘스트 3개 이상이면 클리어 가능!");if(ds.cleared)return;ds.cleared=true;s.xp.total+=30;const y=new Date();y.setDate(y.getDate()-1);const yk=y.toISOString().slice(0,10);if(!s.streak.last||s.streak.last===yk)s.streak.current++;else if(s.streak.shield>0){s.streak.shield--;s.streak.current++}else s.streak.current=1;s.streak.last=today();s.streak.best=Math.max(s.streak.best,s.streak.current);toast("DAY CLEAR! +30 XP 🎉");spark();render()}
 function bossAttack(){const dmg=Math.min(80,20+Math.floor((s.xp.total%100)/2));s.boss.hp=Math.max(0,s.boss.hp-dmg);toast("보스에게 "+dmg+" 데미지! ⚔️");if(s.boss.hp===0){s.xp.total+=150;toast("보스 처치! +150 XP 🏆");s.boss.hp=500}spark();render()}
+
+function openWorkoutEdit(){
+ const wp=adaptiveWorkout();document.getElementById("workoutNameInput").value=wp.name;document.getElementById("workoutMinutesInput").value=wp.minutes;document.getElementById("workoutIntensityInput").value=wp.intensity;document.getElementById("workoutModal").showModal()
+}
+document.getElementById("saveWorkoutEdit").onclick=e=>{e.preventDefault();const old=adaptiveWorkout();s.workouts[today()]={name:document.getElementById("workoutNameInput").value.trim()||old.name,minutes:Math.max(5,parseInt(document.getElementById("workoutMinutesInput").value)||old.minutes),intensity:document.getElementById("workoutIntensityInput").value,done:!!old.done};save();document.getElementById("workoutModal").close();toast("오늘 운동 목표 수정 완료 ✏️");render()}
+function completeWorkout(){const wp=adaptiveWorkout();if(wp.done)return;s.workouts[today()]={...wp,done:true};s.xp.total+=30;s.stats.stamina=(s.stats.stamina||0)+12;s.stats.upper=(s.stats.upper||0)+8;s.boss.hp=Math.max(0,s.boss.hp-30);save();toast("운동 완료! +30 XP 💪");spark();render()}
+
 function renderStats(){document.getElementById("statGrid").innerHTML=Object.entries(statNames).map(([k,n])=>{const v=s.stats[k]||0,l=Math.floor(v/100)+1,p=v%100;return `<div class="statcard"><b>${n}</b><div style="font-size:22px;font-weight:1000;margin:6px 0">Lv.${l}</div><div class="bar"><div class="fill" style="width:${p}%"></div></div><div class="muted">${p}/100</div></div>`}).join("")}
 const measures=[["neck","목 둘레"],["chest","가슴 둘레"],["waist","허리 둘레"],["belly","복부(배꼽) 둘레"],["hip","엉덩이 둘레"],["thighL","허벅지 왼쪽"],["thighR","허벅지 오른쪽"]];
 function renderMeasures(){const m=s.measures[today()]||{};document.getElementById("measureRows").innerHTML=measures.map(([k,n])=>`<div class="measure-row"><div><b>${n}</b></div><input id="m_${k}" type="number" step="0.1" value="${m[k]??""}" placeholder="0.0"></div>`).join("")}
