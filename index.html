@@ -7,9 +7,55 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="BODY QUEST" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css" />
+<style>
+
+:root{
+  --bg:#F7F7FB; --card:#FFFFFF; --text:#242235; --muted:#7E7B91;
+  --primary:#7C5CFC; --primary2:#9A84FF; --green:#42C98B; --yellow:#FFC857;
+  --pink:#FF7E9D; --line:#ECEAF3; --shadow:0 12px 30px rgba(48,39,88,.08);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif}
+body{min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+#app{max-width:720px;margin:0 auto;min-height:100vh;padding-bottom:102px}
+.topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:18px 18px 12px;background:rgba(247,247,251,.92);backdrop-filter:blur(16px)}
+.topbar h1{font-size:22px;margin:1px 0;letter-spacing:-.5px}.eyebrow,.label{font-size:11px;font-weight:900;letter-spacing:1.2px;color:var(--primary)}
+.icon-btn{border:0;background:white;width:44px;height:44px;border-radius:15px;box-shadow:var(--shadow)}
+main{padding:4px 16px 20px}.screen{display:none;animation:fade .2s ease}.screen.active{display:block}
+@keyframes fade{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:none}}
+.hero-card{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 110px;gap:12px;background:linear-gradient(135deg,#7460F6,#A67CFF);color:white;border-radius:28px;padding:23px 20px;box-shadow:0 16px 36px rgba(124,92,252,.24);margin-bottom:14px}
+.hero-card:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.09);right:-50px;top:-50px}
+.level-pill{display:inline-block;background:rgba(255,255,255,.18);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.hero-card h2{font-size:24px;margin:14px 0 5px}.hero-card p{font-size:13px;opacity:.88;margin:0 0 17px;line-height:1.55}
+.avatar-wrap{display:flex;align-items:center;justify-content:center;position:relative}.avatar{font-size:67px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12));animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-7px)}}.level-burst{display:none;position:absolute;background:#FFF4B8;color:#5C4811;font-weight:900;padding:8px 10px;border-radius:12px;transform:rotate(-5deg);font-size:11px}
+.level-burst.show{display:block;animation:pop .9s ease forwards}@keyframes pop{0%{transform:scale(.3) rotate(-5deg);opacity:0}50%{transform:scale(1.15) rotate(4deg);opacity:1}100%{transform:scale(1);opacity:0}}
+.xp-track,.progress-track{height:11px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.2)}.xp-fill{height:100%;background:#FFF37A;border-radius:99px;transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.xp-row{display:flex;justify-content:space-between;font-size:11px;margin-top:6px;opacity:.95}.grid{display:grid;gap:10px}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:repeat(3,1fr)}
+.metric-card,.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.metric-card{padding:16px;text-align:left;border:1px solid var(--line)}button.metric-card{width:100%;color:inherit}.metric-card span{display:block;color:var(--muted);font-size:12px}.metric-card strong{display:block;font-size:20px;margin:5px 0}.metric-card small{font-size:11px;color:var(--primary);font-weight:700}
+.card{padding:18px;margin-top:12px}.card-head,.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px}.card-head h3{margin:3px 0;font-size:17px}.section-title{padding:9px 2px 2px}.section-title h2{font-size:24px;margin:2px 0 6px}.progress-card .progress-track{background:#EEEAFB;height:13px;margin-top:12px}.progress-fill{height:100%;background:linear-gradient(90deg,#7C5CFC,#52D0A2);border-radius:99px;transition:width .5s ease}
+.muted{color:var(--muted);font-size:12px;line-height:1.55}.mini-metrics{margin-top:10px}.mini-metrics .metric-card{padding:13px}.mini-metrics .metric-card strong{font-size:17px}
+.quest-list{display:grid;gap:9px;margin-top:10px}.quest-item{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:10px;border:1px solid var(--line);border-radius:17px;padding:10px;background:#fff;transition:.2s}
+.quest-item.done{background:#F1FBF6;border-color:#C7F0DC}.quest-check{width:39px;height:39px;border-radius:13px;border:2px solid #D9D6E6;background:white;font-size:18px;font-weight:900}.done .quest-check{background:var(--green);border-color:var(--green);color:white}
+.quest-copy strong{display:block;font-size:14px}.quest-copy small{color:var(--muted);font-size:11px}.xp-badge,.soft-chip,.streak-chip,.xp-wallet{border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;background:#F0EDFF;color:var(--primary)}.xp-badge{white-space:nowrap}
+.text-btn{border:0;background:transparent;color:var(--primary);font-weight:800;font-size:12px}.primary-btn,.secondary-btn{border:0;border-radius:16px;padding:14px 16px;font-weight:900;width:100%}.primary-btn{background:var(--primary);color:white;box-shadow:0 8px 18px rgba(124,92,252,.18)}.secondary-btn{background:#ECEAF4;color:#59556E;margin-top:12px}
+.boss-card{background:linear-gradient(135deg,#2D2941,#41385E);color:white;border-radius:24px;padding:18px;margin-top:12px;box-shadow:var(--shadow)}.boss-title{display:flex;justify-content:space-between;align-items:flex-start}.boss-title h3{margin:2px 0}.boss-icon{font-size:42px}.boss-hp{height:12px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden;margin:13px 0 7px}.boss-hp-fill{height:100%;background:#FF7E9D;transition:width .4s}.boss-card button{margin-top:10px;background:#FFF;color:#332C49}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.stat-card{background:white;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow)}.stat-icon{font-size:28px}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-card h3{margin:8px 0 3px;font-size:15px}.stat-card strong{font-size:21px}.stat-bar{height:8px;background:#EEEAFB;border-radius:99px;overflow:hidden;margin-top:9px}.stat-fill{height:100%;background:var(--primary);border-radius:99px}
+canvas{width:100%;height:auto;display:block;margin-top:12px;border-radius:14px;background:#FCFBFF}
+.log-list{display:grid;gap:9px;margin-top:10px}.log-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.log-item:last-child{border-bottom:0}.log-item strong{font-size:13px}.log-item small{display:block;color:var(--muted);margin-top:3px}
+.reward-list{display:grid;gap:10px;margin:10px 0 14px}.reward-item{background:white;border:1px solid var(--line);border-radius:20px;padding:15px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;box-shadow:var(--shadow)}.reward-emoji{font-size:29px}.reward-copy strong{display:block}.reward-copy small{color:var(--muted)}.reward-actions{display:flex;flex-direction:column;gap:6px}.mini-btn{border:0;border-radius:11px;padding:7px 9px;font-size:10px;font-weight:900}.redeem-btn{background:#F0EDFF;color:var(--primary)}.edit-btn{background:#F4F3F7;color:#777386}
+.bottom-nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:30}
+.nav-item{border:0;background:transparent;color:#9995A8;padding:5px 2px}.nav-item span{display:block;font-size:21px;filter:grayscale(1);opacity:.65}.nav-item small{display:block;font-size:9px;font-weight:900;margin-top:2px}.nav-item.active{color:var(--primary)}.nav-item.active span{filter:none;opacity:1;transform:translateY(-1px)}
+.modal{width:min(92%,430px);border:0;border-radius:24px;padding:0;box-shadow:0 30px 80px rgba(25,20,50,.25)}.modal::backdrop{background:rgba(30,25,50,.42);backdrop-filter:blur(3px)}.modal form{padding:22px}.modal h3{margin:0 0 5px}.modal label{display:block;font-size:12px;font-weight:800;margin-top:14px}.modal input,.modal select{width:100%;margin-top:7px;padding:13px;border:1px solid #DCD9E8;border-radius:13px;background:white;color:var(--text)}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.modal-actions button{margin:0}
+.toast{position:fixed;z-index:100;left:50%;bottom:105px;transform:translate(-50%,20px);background:#292437;color:white;padding:11px 16px;border-radius:999px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}.confetti{position:absolute;top:-20px;font-size:18px;animation:fall 1.3s linear forwards}@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+@media(max-width:420px){.hero-card{grid-template-columns:1fr 88px}.avatar{font-size:54px}.hero-card h2{font-size:21px}.grid.three{gap:7px}.mini-metrics .metric-card{padding:11px 9px}.mini-metrics .metric-card strong{font-size:15px}.stats-grid{gap:8px}}
+
+</style>
   <title>BODY QUEST</title>
 </head>
 <body>
@@ -198,6 +244,315 @@
   <div id="toast" class="toast"></div>
   <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
 
-  <script src="app.js"></script>
+  <script>
+
+const KEY = "bodyQuest.v1";
+const todayKey = () => new Date().toISOString().slice(0,10);
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("ko-KR",{month:"numeric",day:"numeric"});
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+
+const defaultQuests = [
+  {id:"water",name:"물 충분히 마시기",xp:10,stat:"recovery",statXp:8,icon:"💧"},
+  {id:"protein",name:"단백질 챙기기",xp:15,stat:"nutrition",statXp:10,icon:"🥚"},
+  {id:"move30",name:"30분 운동",xp:30,stat:"stamina",statXp:14,icon:"🏃"},
+  {id:"strength",name:"근력운동 하기",xp:20,stat:"upper",statXp:10,icon:"🏋️"},
+  {id:"sleep7",name:"7시간 이상 수면",xp:10,stat:"recovery",statXp:10,icon:"😴"},
+  {id:"lateSnack",name:"야식 줄이기",xp:10,stat:"nutrition",statXp:8,icon:"🌙"}
+];
+const weeklyQuests = [
+  {id:"w_strength3",name:"이번 주 근력운동 3회",xp:70,icon:"⚡",target:3,type:"strengthCount"},
+  {id:"w_move150",name:"이번 주 운동 150분",xp:80,icon:"🗺️",target:150,type:"minutes"}
+];
+const specialQuests = [
+  {id:"s_walk",name:"기분전환 산책 20분",xp:20,icon:"🌿",stat:"recovery",statXp:8},
+  {id:"s_stretch",name:"스트레칭 10분",xp:15,icon:"🧘",stat:"core",statXp:6}
+];
+const statMeta = {
+  lower:{name:"하체",icon:"🦵"}, upper:{name:"상체",icon:"💪"}, core:{name:"코어",icon:"🧘"},
+  stamina:{name:"체력",icon:"🫀"}, nutrition:{name:"식습관",icon:"🥗"}, recovery:{name:"회복",icon:"😴"}
+};
+const titles = [
+  {level:1,title:"BODY BEGINNER",avatar:"🌱"},
+  {level:5,title:"BODY GROWER",avatar:"🌿"},
+  {level:10,title:"BODY BUILDER",avatar:"🌳"},
+  {level:20,title:"BODY MASTER",avatar:"👑"}
+];
+
+function initialState(){
+  const t=todayKey();
+  return {
+    profile:{startWeight:59.2,targetWeight:49,currentWeight:59.2},
+    xp:{total:0,spent:0},
+    stats:{lower:0,upper:0,core:0,stamina:0,nutrition:0,recovery:0},
+    daily:{[t]:{completed:{},xp:0,rest:false}},
+    special:{[t]:{}},
+    weeklyClaims:{},
+    weights:[{date:t,value:59.2}],
+    workouts:[],
+    streak:{current:0,best:0,lastQualified:null,shields:1,lastShieldAwardLevel:0},
+    boss:{date:t,name:"운동하기 싫음",icon:"🐲",maxHp:60,hp:60,defeated:false,reward:50},
+    rewards:[
+      {id:"r1",name:"카페 음료",cost:100,emoji:"☕"},
+      {id:"r2",name:"뜨개실",cost:300,emoji:"🧶"},
+      {id:"r3",name:"운동복",cost:500,emoji:"👟"},
+      {id:"r4",name:"맛있는 외식",cost:800,emoji:"🍽️"},
+      {id:"r5",name:"사고 싶었던 물건",cost:1500,emoji:"✨"}
+    ],
+    redemptions:[]
+  };
+}
+let state = load();
+function load(){
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(!raw) return initialState();
+    return Object.assign(initialState(), JSON.parse(raw));
+  }catch(e){return initialState();}
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function ensureToday(){
+  const t=todayKey();
+  if(!state.daily[t]) state.daily[t]={completed:{},xp:0,rest:false};
+  if(!state.special[t]) state.special[t]={};
+  if(!state.boss || state.boss.date!==t){
+    state.boss={date:t,name:"운동하기 싫음",icon:"🐲",maxHp:60,hp:60,defeated:false,reward:50};
+  }
+}
+function levelInfo(total=state.xp.total){
+  let level=Math.floor(total/100)+1;
+  let within=total%100;
+  let ti=titles[0];
+  titles.forEach(x=>{if(level>=x.level)ti=x});
+  return {level,within,title:ti.title,avatar:ti.avatar};
+}
+function availableXp(){return Math.max(0,state.xp.total-state.xp.spent);}
+function addXp(amount,stat=null,statXp=0,msg="XP 획득!"){
+  const before=levelInfo().level;
+  state.xp.total+=amount;
+  if(stat) state.stats[stat]=(state.stats[stat]||0)+statXp;
+  const after=levelInfo().level;
+  if(after>before){celebrateLevel(); maybeAwardShield(after);}
+  toast(`+${amount} XP · ${msg}`);
+  save(); render();
+}
+function maybeAwardShield(level){
+  if(level>=5 && level%5===0 && state.streak.lastShieldAwardLevel!==level){
+    state.streak.shields+=1; state.streak.lastShieldAwardLevel=level;
+    toast("🛡️ 레벨 보너스! 회복권 +1");
+  }
+}
+function updateStreak(){
+  const t=todayKey(), day=state.daily[t];
+  const completed=Object.keys(day.completed||{}).filter(k=>day.completed[k]).length;
+  const qualified=completed>=3 || day.rest;
+  if(!qualified) return;
+  if(state.streak.lastQualified===t) return;
+  const y=new Date(); y.setDate(y.getDate()-1);
+  const yk=y.toISOString().slice(0,10);
+  if(state.streak.lastQualified===yk || !state.streak.lastQualified){
+    state.streak.current+=1;
+  }else{
+    if(state.streak.shields>0){
+      state.streak.shields-=1;
+      state.streak.current+=1;
+      toast("🛡️ 회복권이 연속 기록을 지켜줬어요!");
+    }else state.streak.current=1;
+  }
+  state.streak.lastQualified=t;
+  state.streak.best=Math.max(state.streak.best,state.streak.current);
+}
+function toggleQuest(id){
+  ensureToday();
+  const q=defaultQuests.find(x=>x.id===id), day=state.daily[todayKey()];
+  if(!q || day.completed[id]) return;
+  day.completed[id]=true; day.xp+=q.xp;
+  damageBoss(q.xp>=20?20:10,false);
+  addXp(q.xp,q.stat,q.statXp,q.name+" 완료");
+  updateStreak(); save(); render(); burstAtCenter(q.icon);
+}
+function toggleSpecial(id){
+  const q=specialQuests.find(x=>x.id===id), map=state.special[todayKey()];
+  if(!q || map[id]) return;
+  map[id]=true;
+  addXp(q.xp,q.stat,q.statXp,q.name+" 완료"); updateStreak(); save(); render();
+}
+function weekStartKey(){
+  const d=new Date(); const day=(d.getDay()+6)%7; d.setDate(d.getDate()-day); return d.toISOString().slice(0,10);
+}
+function weekWorkouts(){
+  const start=weekStartKey(); return state.workouts.filter(w=>w.date>=start);
+}
+function weeklyProgress(q){
+  const ws=weekWorkouts();
+  if(q.type==="minutes") return ws.reduce((a,b)=>a+(+b.minutes||0),0);
+  if(q.type==="strengthCount") return ws.filter(w=>["lower","upper","core"].includes(w.stat)).length;
+  return 0;
+}
+function claimWeekly(id){
+  const q=weeklyQuests.find(x=>x.id===id), key=weekStartKey()+"_"+id;
+  if(!q || state.weeklyClaims[key]) return;
+  if(weeklyProgress(q)<q.target){toast("아직 목표를 채우는 중이에요!");return;}
+  state.weeklyClaims[key]=true; addXp(q.xp,null,0,"주간 퀘스트 보너스");
+}
+function damageBoss(dmg,award=true){
+  const b=state.boss; if(b.defeated) return;
+  b.hp=Math.max(0,b.hp-dmg);
+  if(b.hp===0){b.defeated=true;if(award){addXp(b.reward,null,0,"보스 처치 보너스");}else{setTimeout(()=>addXp(b.reward,null,0,"보스 처치 보너스"),80)}}
+  save();
+}
+function bossAttack(){
+  if(state.boss.defeated)return;
+  if((state.workouts||[]).some(w=>w.date===todayKey())){
+    damageBoss(30);
+    toast("⚔️ 오늘 운동의 힘으로 보스에게 30 데미지!");
+  }else toast("오늘 운동 기록을 먼저 남기면 공격할 수 있어요!");
+}
+function markRestDay(){
+  const d=state.daily[todayKey()];
+  if(d.rest){toast("이미 회복 데이로 기록했어요.");return;}
+  d.rest=true; state.stats.recovery+=12;
+  updateStreak(); save(); render(); toast("🌙 회복도 훈련이에요. 회복 +12");
+}
+function addWorkout(name,stat,minutes){
+  const xp=Math.min(50,Math.max(10,Math.round(minutes/5)*5));
+  state.workouts.unshift({id:Date.now().toString(),date:todayKey(),name,stat,minutes:+minutes,xp});
+  state.stats[stat]=(state.stats[stat]||0)+Math.min(20,Math.round(minutes/3));
+  state.xp.total+=xp;
+  damageBoss(30,false);
+  save(); render(); toast(`🏋️ 운동 기록! +${xp} XP`);
+}
+function saveWeight(value){
+  const v=+value;if(!v||v<30||v>250)return;
+  state.profile.currentWeight=v;
+  const t=todayKey(), found=state.weights.find(w=>w.date===t);
+  if(found) found.value=v; else state.weights.push({date:t,value:v});
+  state.weights.sort((a,b)=>a.date.localeCompare(b.date));
+  save();render();toast("📈 기록 완료. 숫자에는 점수나 감점이 없어요.");
+}
+function rewardRedeem(id){
+  const r=state.rewards.find(x=>x.id===id); if(!r)return;
+  if(availableXp()<r.cost){toast("XP가 조금 더 필요해요!");return;}
+  state.xp.spent+=r.cost; state.redemptions.push({id:Date.now().toString(),rewardId:id,date:todayKey(),cost:r.cost});
+  save();render();toast(`${r.emoji} ${r.name} 보상 획득!`);
+  confetti();
+}
+function rewardEdit(id){
+  const r=state.rewards.find(x=>x.id===id);
+  document.querySelector("#rewardDialogTitle").textContent=r?"보상 수정":"새 보상 추가";
+  document.querySelector("#rewardEditId").value=r?.id||"";
+  document.querySelector("#rewardName").value=r?.name||"";
+  document.querySelector("#rewardCost").value=r?.cost||100;
+  document.querySelector("#rewardEmoji").value=r?.emoji||"🎁";
+  document.querySelector("#rewardDialog").showModal();
+}
+function saveReward(){
+  const id=document.querySelector("#rewardEditId").value,name=document.querySelector("#rewardName").value.trim(),
+  cost=+document.querySelector("#rewardCost").value,emoji=document.querySelector("#rewardEmoji").value||"🎁";
+  if(!name||!cost)return;
+  if(id){const r=state.rewards.find(x=>x.id===id);Object.assign(r,{name,cost,emoji});}
+  else state.rewards.push({id:"r"+Date.now(),name,cost,emoji});
+  save();render();toast("보상 목록을 저장했어요.");
+}
+function render(){
+  ensureToday();
+  const li=levelInfo(), p=state.profile, day=state.daily[todayKey()];
+  qs("#heroLevel").textContent=li.level; qs("#heroTitle").textContent=li.title; qs("#avatar").textContent=li.avatar;
+  qs("#levelXpBar").style.width=li.within+"%"; qs("#levelXpText").textContent=`${li.within} / 100 XP`;
+  qs("#totalXpText").textContent=`총 ${state.xp.total} XP`;
+  qs("#currentWeight").textContent=(+p.currentWeight).toFixed(1); qs("#targetWeight").textContent=(+p.targetWeight).toFixed(1);
+  const totalDiff=Math.abs(p.startWeight-p.targetWeight)||1, doneDiff=Math.abs(p.startWeight-p.currentWeight);
+  const progress=clamp(doneDiff/totalDiff*100,0,100);
+  qs("#goalBar").style.width=progress+"%";qs("#goalPercent").textContent=Math.round(progress)+"%";
+  qs("#remainingWeight").textContent=`목표까지 ${Math.abs(p.currentWeight-p.targetWeight).toFixed(1)}kg`;
+  qs("#todayXp").textContent=day.xp||0; qs("#streak").textContent=state.streak.current;qs("#questStreak").textContent=state.streak.current;
+  qs("#shieldCount").textContent=state.streak.shields;qs("#bestStreak").textContent=state.streak.best;
+  qs("#walletXp").textContent=availableXp();
+
+  const qHtml=defaultQuests.map(q=>questHtml(q,!!day.completed[q.id],()=>`toggleQuest('${q.id}')`)).join("");
+  qs("#questList").innerHTML=qHtml; qs("#homeQuestList").innerHTML=defaultQuests.slice(0,4).map(q=>questHtml(q,!!day.completed[q.id],()=>`toggleQuest('${q.id}')`)).join("");
+  qs("#dailyDoneCount").textContent=`${Object.values(day.completed||{}).filter(Boolean).length}/${defaultQuests.length}`;
+
+  qs("#specialQuestList").innerHTML=specialQuests.map(q=>questHtml(q,!!state.special[todayKey()][q.id],()=>`toggleSpecial('${q.id}')`)).join("");
+  qs("#weeklyQuestList").innerHTML=weeklyQuests.map(q=>{
+    const val=weeklyProgress(q),key=weekStartKey()+"_"+q.id,done=!!state.weeklyClaims[key], ready=val>=q.target;
+    return `<div class="quest-item ${done?"done":""}"><button class="quest-check" onclick="claimWeekly('${q.id}')">${done?"✓":ready?"!":""}</button>
+    <div class="quest-copy"><strong>${q.icon} ${q.name}</strong><small>${Math.min(val,q.target)} / ${q.target}${q.type==="minutes"?"분":"회"}</small></div><span class="xp-badge">+${q.xp} XP</span></div>`;
+  }).join("");
+
+  renderBoss(); renderStats(); renderRewards(); renderWorkoutLog(); drawCharts();
+}
+function questHtml(q,done,onClickFactory){
+  return `<div class="quest-item ${done?"done":""}"><button class="quest-check" onclick="${onClickFactory()}">${done?"✓":""}</button>
+  <div class="quest-copy"><strong>${q.icon} ${q.name}</strong><small>${statMeta[q.stat]?.name||"습관"} 성장</small></div><span class="xp-badge">+${q.xp} XP</span></div>`;
+}
+function renderBoss(){
+  const b=state.boss,pct=b.hp/b.maxHp*100;
+  const html=`<div class="boss-title"><div><span class="label">TODAY'S BOSS</span><h3>${b.icon} “${b.name}”</h3><small>${b.defeated?"처치 완료! 오늘의 승리 🏆":"운동을 기록하고 공격하세요"}</small></div><div class="boss-icon">${b.defeated?"🏆":"🐲"}</div></div>
+  <div class="boss-hp"><div class="boss-hp-fill" style="width:${pct}%"></div></div><small>HP ${b.hp} / ${b.maxHp}</small>
+  <button class="primary-btn" onclick="bossAttack()" ${b.defeated?"disabled":""}>${b.defeated?"보스 처치 완료":"⚔️ 공격하기"}</button>`;
+  qs("#bossCard").innerHTML=html; qs("#bossHome").innerHTML=html;
+}
+function renderStats(){
+  qs("#statCards").innerHTML=Object.entries(statMeta).map(([k,m])=>{
+    const xp=state.stats[k]||0, level=Math.floor(xp/100)+1,pct=xp%100;
+    return `<div class="stat-card"><div class="stat-top"><span class="stat-icon">${m.icon}</span><strong>Lv.${level}</strong></div><h3>${m.name}</h3><small>${pct} / 100</small><div class="stat-bar"><div class="stat-fill" style="width:${pct}%"></div></div></div>`;
+  }).join("");
+}
+function renderRewards(){
+  qs("#rewardList").innerHTML=state.rewards.sort((a,b)=>a.cost-b.cost).map(r=>`<div class="reward-item">
+    <div class="reward-emoji">${r.emoji}</div><div class="reward-copy"><strong>${r.name}</strong><small>${r.cost} XP</small></div>
+    <div class="reward-actions"><button class="mini-btn redeem-btn" onclick="rewardRedeem('${r.id}')">교환</button><button class="mini-btn edit-btn" onclick="rewardEdit('${r.id}')">수정</button></div></div>`).join("");
+}
+function renderWorkoutLog(){
+  const arr=state.workouts.slice(0,8);
+  qs("#workoutLog").innerHTML=arr.length?arr.map(w=>`<div class="log-item"><div><strong>${statMeta[w.stat]?.icon||"🏃"} ${w.name}</strong><small>${fmtDate(w.date)} · ${w.minutes}분 · ${statMeta[w.stat]?.name||""}</small></div><strong>+${w.xp} XP</strong></div>`).join(""):`<p class="muted">아직 운동 기록이 없어요. 첫 기록을 남겨보세요!</p>`;
+}
+function drawCharts(){
+  drawLineChart(qs("#weightChart"),state.weights.slice(-14).map(x=>({label:fmtDate(x.date),value:x.value})),true);
+  const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=d.toISOString().slice(0,10);days.push({label:fmtDate(k),value:state.daily[k]?.xp||0})}
+  drawBarChart(qs("#xpChart"),days);
+  if(state.weights.length>=2){
+    const first=state.weights[Math.max(0,state.weights.length-7)].value,last=state.weights.at(-1).value,d=last-first;
+    qs("#weightTrend").textContent=`최근 ${d>0?"+":""}${d.toFixed(1)}kg`;
+  }
+}
+function drawLineChart(canvas,data,weight=false){
+  const c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);
+  c.strokeStyle="#ECEAF3";c.lineWidth=2;for(let i=1;i<4;i++){let y=h*i/4;c.beginPath();c.moveTo(45,y);c.lineTo(w-15,y);c.stroke()}
+  if(data.length===0)return;
+  const vals=data.map(d=>d.value),min=Math.min(...vals),max=Math.max(...vals),range=Math.max(.6,max-min);
+  const x=i=>45+(w-70)*(data.length===1?.5:i/(data.length-1)), y=v=>30+(h-70)*(1-(v-min)/range);
+  c.strokeStyle="#7C5CFC";c.lineWidth=6;c.lineCap="round";c.lineJoin="round";c.beginPath();data.forEach((d,i)=>i?c.lineTo(x(i),y(d.value)):c.moveTo(x(i),y(d.value)));c.stroke();
+  data.forEach((d,i)=>{c.fillStyle="#7C5CFC";c.beginPath();c.arc(x(i),y(d.value),7,0,Math.PI*2);c.fill()});
+  c.fillStyle="#8B8799";c.font="18px -apple-system";data.forEach((d,i)=>{if(i===0||i===data.length-1)c.fillText(d.label,x(i)-22,h-16)});
+}
+function drawBarChart(canvas,data){
+  const c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;c.clearRect(0,0,w,h);const max=Math.max(50,...data.map(d=>d.value)),bw=(w-70)/data.length;
+  data.forEach((d,i)=>{const bh=(h-65)*d.value/max,x=45+i*bw+8,y=h-38-bh;c.fillStyle="#9A84FF";roundRect(c,x,y,bw-16,bh,10);c.fill();c.fillStyle="#8B8799";c.font="16px -apple-system";c.fillText(d.label,x-3,h-13)});
+}
+function roundRect(ctx,x,y,w,h,r){if(h<0)h=0;r=Math.min(r,w/2,h/2||r);ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):ctx.rect(x,y,w,h)}
+function qs(s){return document.querySelector(s)}
+function toast(msg){const t=qs("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2200)}
+function confetti(){const layer=qs("#confetti"),bits=["✨","⭐","💜","🎉","🌿"];for(let i=0;i<30;i++){const e=document.createElement("span");e.className="confetti";e.textContent=bits[i%bits.length];e.style.left=Math.random()*100+"%";e.style.animationDelay=Math.random()*.3+"s";layer.appendChild(e);setTimeout(()=>e.remove(),1800)}}
+function burstAtCenter(icon){toast(`${icon} 퀘스트 완료!`)}
+function celebrateLevel(){qs("#levelBurst").classList.add("show");setTimeout(()=>qs("#levelBurst").classList.remove("show"),1000);confetti()}
+
+document.querySelectorAll(".nav-item").forEach(btn=>btn.addEventListener("click",()=>navigate(btn.dataset.target)));
+document.querySelectorAll("[data-nav]").forEach(btn=>btn.addEventListener("click",()=>navigate(btn.dataset.nav)));
+function navigate(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.target===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="progress")setTimeout(drawCharts,50)}
+qs("#weightCard").onclick=()=>{qs("#weightInput").value=state.profile.currentWeight;qs("#weightDialog").showModal()};
+qs("#saveWeightBtn").onclick=e=>{e.preventDefault();saveWeight(qs("#weightInput").value);qs("#weightDialog").close()};
+qs("#addWorkoutBtn").onclick=()=>qs("#workoutDialog").showModal();
+qs("#saveWorkoutBtn").onclick=e=>{e.preventDefault();const n=qs("#workoutName").value.trim(),m=+qs("#workoutMinutes").value;if(!n||!m)return;addWorkout(n,qs("#workoutStat").value,m);qs("#workoutDialog").close();qs("#workoutName").value=""};
+qs("#addRewardBtn").onclick=()=>rewardEdit(null);
+qs("#saveRewardBtn").onclick=e=>{e.preventDefault();saveReward();qs("#rewardDialog").close()};
+qs("#restDayBtn").onclick=markRestDay;
+qs("#settingsBtn").onclick=()=>{qs("#startWeightInput").value=state.profile.startWeight;qs("#targetWeightInput").value=state.profile.targetWeight;qs("#settingsDialog").showModal()};
+qs("#saveSettingsBtn").onclick=e=>{e.preventDefault();state.profile.startWeight=+qs("#startWeightInput").value||state.profile.startWeight;state.profile.targetWeight=+qs("#targetWeightInput").value||state.profile.targetWeight;save();render();qs("#settingsDialog").close();toast("설정을 저장했어요.")};
+
+ensureToday();save();render();
+
+
+</script>
 </body>
 </html>
